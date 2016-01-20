@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DW2DB"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        
-    </Grid>
+        Title="{DynamicResource Title}" Height="350" Width="525" d:DataContext="{d:DesignInstance local:MainWindowVM }">
+    <DockPanel>
+        <DockPanel.DataContext>
+            <local:MainWindowVM/>
+        </DockPanel.DataContext>
+        <Menu DockPanel.Dock="Top" Background="{x:Null}">
+            <MenuItem x:Name="MenuLanguage" Header="{DynamicResource MenuLanguage}" />
+        </Menu>
+  
+      
+    </DockPanel>
 </Window>
