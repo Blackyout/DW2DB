@@ -11,17 +11,14 @@ namespace DW2DB
 {
     public class MainWindowVM : INotifyPropertyChanged
     {
-        private string _text;
-
-        public string Text
+        public MainWindowVM()
         {
-            get { return _text; }
-            set
-            {
-                _text = value;
-                OnPropertyChanged("Text");
-            }
+            AllDigimonsVM = new AllDigimonsVM();
         }
+
+        public AllDigimonsVM AllDigimonsVM { get; set; }
+
+
 
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -3,4 +3,18 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="Title">Digimon World 2 База данных</v:String>
     <v:String x:Key="MenuLanguage">Язык</v:String>
+    <v:String x:Key="About">О программе</v:String>
+    <v:String x:Key="AllDigimons">Все дигимоны</v:String>
+    <v:String x:Key="Digivolve">Эволюция</v:String>
+    <v:String x:Key="DnaDigivolve">DNA Эволюция</v:String>
+    <v:String x:Key="Skills">Навыки</v:String>
+    <v:String x:Key="Attack">Атака</v:String>
+    <v:String x:Key="CounterAttack">Прервать</v:String>
+    <v:String x:Key="Interrupt">Счетчик Атака</v:String>
+    <v:String x:Key="Assist">Помощь</v:String>
+    <v:String x:Key="Location">Где поймать?</v:String>
+    <v:String x:Key="Digimon">Дигимон</v:String>
+    <v:String x:Key="Rank">Форма</v:String>
+    <v:String x:Key="Type">Тип</v:String>
+    <v:String x:Key="Speciality">Спец-ция</v:String>
 </ResourceDictionary>

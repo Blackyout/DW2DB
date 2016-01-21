@@ -3,4 +3,19 @@
                     xmlns:v="clr-namespace:System;assembly=mscorlib">
     <v:String x:Key="Title">Digimon World 2 DataBase</v:String>
     <v:String x:Key="MenuLanguage">Language</v:String>
+    <v:String x:Key="About">About</v:String>
+    <v:String x:Key="AllDigimons">All digimons</v:String>
+    <v:String x:Key="Digivolve">Digivolve</v:String>
+    <v:String x:Key="DnaDigivolve">DNA Digivolve</v:String>
+    <v:String x:Key="Skills">Skills</v:String>
+    <v:String x:Key="Attack">Attack</v:String>
+    <v:String x:Key="CounterAttack">CounterAttack</v:String>
+    <v:String x:Key="Interrupt">Interrupt</v:String>
+    <v:String x:Key="Assist">Assist</v:String>
+    <v:String x:Key="Location">Digimon Location</v:String>
+    <v:String x:Key="Digimon">Digimon</v:String>
+    <v:String x:Key="Rank">Rank</v:String>
+    <v:String x:Key="Type">Type</v:String>
+    <v:String x:Key="Speciality">Speciality</v:String>
+
 </ResourceDictionary>

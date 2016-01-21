@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Media;
 
 namespace DW2DB
 {
@@ -26,6 +29,9 @@ namespace DW2DB
 
         public App()
         {
+            if (!Directory.Exists("DigimonPic"))
+                Directory.CreateDirectory("DigimonPic");
+
             m_Languages.Clear();
             m_Languages.Add(new CultureInfo("en-US")); //Нейтральная культура для этого проекта
             m_Languages.Add(new CultureInfo("ru-RU"));
@@ -89,6 +95,29 @@ namespace DW2DB
         {
             DW2DB.Properties.Settings.Default.DefaultLanguage = Language;
             DW2DB.Properties.Settings.Default.Save();
+        }
+    }
+
+    [ValueConversion(typeof(string), typeof(string))]
+    public class ImagePathConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            var path = System.AppDomain.CurrentDomain.BaseDirectory + @"\DigimonPic\" + 
+                (string) value;
+
+            if (File.Exists(path + ".jpg"))
+                return path + ".jpg";
+            if (File.Exists(path + ".jpeg"))
+                return path + ".jpeg";
+            if (File.Exists(path + ".png"))
+                return path + ".png";
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
         }
     }
 }

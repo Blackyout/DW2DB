@@ -5,15 +5,24 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DW2DB"
         mc:Ignorable="d"
-        Title="{DynamicResource Title}" Height="350" Width="525" d:DataContext="{d:DesignInstance local:MainWindowVM }">
+        Title="{DynamicResource Title}" Height="500" Width="800" d:DataContext="{d:DesignInstance local:MainWindowVM }">
     <DockPanel>
         <DockPanel.DataContext>
             <local:MainWindowVM/>
         </DockPanel.DataContext>
         <Menu DockPanel.Dock="Top" Background="{x:Null}">
             <MenuItem x:Name="MenuLanguage" Header="{DynamicResource MenuLanguage}" />
+            <MenuItem Header="{DynamicResource About}" />
         </Menu>
-  
+        <TabControl>
+            <TabItem Header="{DynamicResource AllDigimons}">
+                    <local:AllDigimons DataContext="{Binding AllDigimonsVM}"/>
+            </TabItem>
+            <TabItem Header="{DynamicResource Digivolve}"></TabItem>
+            <TabItem Header="{DynamicResource DnaDigivolve}"></TabItem>
+            <TabItem Header="{DynamicResource Skills}"></TabItem>
+            <TabItem Header="{DynamicResource Location}"></TabItem>
+        </TabControl>
       
     </DockPanel>
 </Window>
