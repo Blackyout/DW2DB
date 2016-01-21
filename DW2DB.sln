@@ -5,6 +5,8 @@ VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DW2DB", "DW2DB\DW2DB.csproj", "{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DB", "DB\DB.csproj", "{77152279-8F4A-44EE-ADF8-1385727FBBED}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
