@@ -8,6 +8,32 @@ namespace DB
 {
     public class DB
     {
+        public static List<Skill> Skills = new List<Skill>()
+        {
+            new Skill("Agumon",SkillType.Attack,"Перцовое дыхание","Pepper Breath","Стреляет огненным шаром", "Small fireball attack", 8),
+        };
+
+        public static List<Domain> Domains = new List<Domain>
+        {
+            new Domain("Драйв","Drive"),
+            new Domain("Новый Драйв","Drive 2"),
+            new Domain("СКЗИ","SCSI"),
+        };
+
+        public static Domain GetDomain(string domainId)
+        {
+            return Domains.FirstOrDefault(x => x.Id == domainId);
+        }
+
+
+        public static List<Location> Locations = new List<Location>()
+        {
+            new Location("Betamon",GetDomain("SCSI"),new List<int>() {2}),
+            new Location("Agumon","You get as partner when you join the Gold Hawk Guard Team", "Станет вашим партнером при присоединении к Золотым Соколам")
+
+        }; 
+
+
         public static List<Digivolve> Digivolves = new List<Digivolve>()
         {
             new Digivolve("Agumon","Greymon",0),

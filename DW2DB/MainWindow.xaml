@@ -20,8 +20,6 @@
             </TabItem>
             <TabItem Header="{DynamicResource Digivolve}"></TabItem>
             <TabItem Header="{DynamicResource DnaDigivolve}"></TabItem>
-            <TabItem Header="{DynamicResource Skills}"></TabItem>
-            <TabItem Header="{DynamicResource Location}"></TabItem>
         </TabControl>
       
     </DockPanel>

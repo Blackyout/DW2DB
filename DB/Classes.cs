@@ -7,6 +7,100 @@ using System.Threading.Tasks;
 
 namespace DB
 {
+    public class Skill
+    {
+        public Skill(string digimonId, SkillType type, string nameRus, string nameEng, string descriptionRus, string descriptionEng, int mp)
+        {
+            DigimonId = digimonId;
+            Type = type;
+            NameRus = nameRus;
+            NameEng = nameEng;
+            DescriptionRus = descriptionRus;
+            DescriptionEng = descriptionEng;
+            MP = mp;
+        }
+
+        public string DigimonId { get; set; }
+
+        public SkillType Type { get; set; }
+
+        public string NameRus { get; set; }
+
+        public string NameEng { get; set; }
+
+        public string DescriptionRus { get; set; }
+
+        public string DescriptionEng { get; set; }
+
+        public int MP { get; set; }
+
+    }
+
+
+    public enum SkillType
+    {
+        /// <summary>
+        /// Атака
+        /// </summary>
+        Attack,
+        /// <summary>
+        /// Контраатака
+        /// </summary>
+        CounterAttack,
+        /// <summary>
+        /// Прерывание
+        /// </summary>
+        Interrupt,
+        /// <summary>
+        /// Помощь
+        /// </summary>
+        Assist
+    }
+
+    public class Location
+    {
+        public Location(string digimonId, Domain domain, List<int> floors)
+        {
+            DigimonId = digimonId;
+            Domain = domain;
+            Floors = floors;
+        }
+
+        public Location(string digimonId, string descriptionEng, string descriptionRus)
+        {
+            DigimonId = digimonId;
+            DescriptionEng = descriptionEng;
+            DescriptionRus = descriptionRus;
+        }
+        public string DigimonId { get; set; }
+
+        public Domain Domain { get; set; }
+
+        /// <summary>
+        /// На случай если нет домена
+        /// </summary>
+        public string DescriptionEng { get; set; }
+        /// <summary>
+        /// На случай если нет домена
+        /// </summary>
+        public string DescriptionRus { get; set; }
+
+        public List<int> Floors { get; set; } 
+    }
+
+    public class Domain
+    {
+        public Domain(string nameRus, string nameEng)
+        {
+            NameRus = nameRus;
+            NameEng = nameEng;
+        }
+
+        public string Id => NameEng;
+        public string NameRus { get; set; }
+        public string NameEng { get; set; }
+    }
+    
     public class Digivolve
     {
         public Digivolve(string digimonFromId, string digimonToId, int dp)

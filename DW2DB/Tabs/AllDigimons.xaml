@@ -4,13 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DW2DB"
-             mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AllDigimonsVM}">
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AllDigimonsVM}"
+             MinHeight="300" MinWidth="500">
     <UserControl.Resources>
         <local:ImagePathConverter x:Key="ImagePathConverter" />
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -59,6 +62,83 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" Margin="3"  Source="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
+                  SelectedItem="{Binding SelectedItem}"
+                              ItemsSource="{Binding Path=Skills}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource Digimon}"  Width="2*" Binding="{Binding Path=Name, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Rank}" Width="*" Binding="{Binding Path=Rank, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Type}" Width="*" Binding="{Binding Path=Type, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Speciality}" Width="*" Binding="{Binding Path=Speciality, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
+                              ItemsSource="{Binding Path=Locations}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{DynamicResource Digimon}"  Width="2*" Binding="{Binding Path=Name, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Rank}" Width="*" Binding="{Binding Path=Rank, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Type}" Width="*" Binding="{Binding Path=Type, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource Speciality}" Width="*" Binding="{Binding Path=Speciality, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Margin="3"  Source="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
     </Grid>
 </UserControl>

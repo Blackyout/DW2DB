@@ -25,8 +25,8 @@ namespace DW2DB
         }
 
         private ObservableCollection<DigimonVM> _allDigimons;
-
         private string _nameFilter;
+
         private DigimonVM _selectedItem;
 
         public AllDigimonsVM()
