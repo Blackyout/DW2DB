@@ -10,17 +10,27 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
 		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Debug|x86.ActiveCfg = Debug|x86
+		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Debug|x86.Build.0 = Debug|x86
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|x86.ActiveCfg = Release|x86
+		{0CF9AF32-C54D-4F1F-BD9A-D7291C1E6E26}.Release|x86.Build.0 = Release|x86
 		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|x86.ActiveCfg = Debug|x86
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Debug|x86.Build.0 = Debug|x86
 		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|x86.ActiveCfg = Release|x86
+		{77152279-8F4A-44EE-ADF8-1385727FBBED}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

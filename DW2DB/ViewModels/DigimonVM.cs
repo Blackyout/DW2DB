@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -12,6 +13,8 @@ namespace DW2DB.ViewModels
 {
     public class DigimonVM : INotifyPropertyChanged
     {
+        private ObservableCollection<SkillVM> _skills;
+        private ObservableCollection<LocationVM> _locations;
         public Digimon Source { get; set; }
 
         public DigimonVM(Digimon source)
@@ -52,11 +55,30 @@ namespace DW2DB.ViewModels
 
         public string Speciality { get; set; }
 
+        public ObservableCollection<SkillVM> Skills
+        {
+            get { return _skills; }
+            set
+            {
+                _skills = value;
+                OnPropertyChanged(nameof(Skills));
+            }
+        }
+
+        public ObservableCollection<LocationVM> Locations
+        {
+            get { return _locations; }
+            set
+            {
+                _locations = value;
+                OnPropertyChanged(nameof(Locations));
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

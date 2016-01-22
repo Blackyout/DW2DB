@@ -17,4 +17,7 @@
     <v:String x:Key="Rank">Форма</v:String>
     <v:String x:Key="Type">Тип</v:String>
     <v:String x:Key="Speciality">Спец-ция</v:String>
+    <v:String x:Key="Skill">Умение</v:String>
+    <v:String x:Key="Description">Описание</v:String>
+    <v:String x:Key="Domain">Домен</v:String>
 </ResourceDictionary>

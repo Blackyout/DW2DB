@@ -68,6 +68,7 @@ namespace DB
 
         public Location(string digimonId, string descriptionEng, string descriptionRus)
         {
+            Floors = new List<int>();
             DigimonId = digimonId;
             DescriptionEng = descriptionEng;
             DescriptionRus = descriptionRus;
@@ -269,6 +270,22 @@ namespace DB
             {Speciality.Water,"Вода"},
             {Speciality.Darkness,"Тьма"},
             {Speciality.Machine,"Машина"},
+        };
+
+        public static Dictionary<SkillType, string> SkillTypeRus = new Dictionary<SkillType, string>()
+        {
+            {SkillType.Attack,"Аттака"},
+            {SkillType.CounterAttack,"Контратака"},
+            {SkillType.Interrupt,"Прерывание"},
+            {SkillType.Assist,"Помощь"},
+        };
+
+        public static Dictionary<SkillType, string> SkillTypeEng = new Dictionary<SkillType, string>()
+        {
+            {SkillType.Attack,"Attack"},
+            {SkillType.CounterAttack,"CounterAttack"},
+            {SkillType.Interrupt,"Interrupt"},
+            {SkillType.Assist,"Assist"},
         };
     }
 

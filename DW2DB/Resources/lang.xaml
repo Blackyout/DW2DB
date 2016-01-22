@@ -17,5 +17,7 @@
     <v:String x:Key="Rank">Rank</v:String>
     <v:String x:Key="Type">Type</v:String>
     <v:String x:Key="Speciality">Speciality</v:String>
-
+    <v:String x:Key="Skill">Skill</v:String>
+    <v:String x:Key="Description">Description</v:String>
+    <v:String x:Key="Domain">Domain</v:String>
 </ResourceDictionary>

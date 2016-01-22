@@ -32,6 +32,11 @@ namespace DW2DB
         public AllDigimonsVM()
         {
             AllDigimons = new ObservableCollection<DigimonVM>(DB.DB.Digimons.Select(x => new DigimonVM(x)));
+            foreach (var allDigimon in AllDigimons)
+            {
+                allDigimon.Skills = new ObservableCollection<SkillVM>(DB.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new SkillVM(x)));
+                allDigimon.Locations = new ObservableCollection<LocationVM>(DB.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new LocationVM(x)));
+            }
         }
 
 
@@ -48,7 +53,10 @@ namespace DW2DB
         public ObservableCollection<DigimonVM> FilteredDigimons
         {
             get { return new ObservableCollection<DigimonVM>(
-                AllDigimons.Where(x => string.IsNullOrWhiteSpace(NameFilter) || x.Name.Contains(NameFilter))); }
+                AllDigimons.Where(x => string.IsNullOrWhiteSpace(NameFilter) 
+                || x.Source.NameEng.ToLower().Contains(NameFilter.ToLower())
+                || x.Source.NameRus.ToLower().Contains(NameFilter.ToLower()))
+                ); }
         }
 
         public string NameFilter
@@ -66,7 +74,7 @@ namespace DW2DB
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        protected virtual void OnPropertyChanged( string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
