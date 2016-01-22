@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DW2DB"
+             xmlns:gif="http://wpfanimatedgif.codeplex.com"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AllDigimonsVM}"
              MinHeight="300" MinWidth="500">
     <UserControl.Resources>
@@ -120,6 +121,7 @@
         </DataGrid>
 
 
-        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Margin="3"  Source="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
+               gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
     </Grid>
 </UserControl>

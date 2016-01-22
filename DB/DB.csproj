@@ -59,7 +59,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes.cs" />
+    <Compile Include="Classes\ClassHelper.cs" />
+    <Compile Include="Classes\Digimon.cs" />
+    <Compile Include="Classes\Digivolve.cs" />
+    <Compile Include="Classes\Domain.cs" />
+    <Compile Include="Classes\Location.cs" />
+    <Compile Include="Classes\Skill.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

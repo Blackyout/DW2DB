@@ -104,7 +104,7 @@ namespace DW2DB
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
             var path = System.AppDomain.CurrentDomain.BaseDirectory + @"\DigimonPic\" + 
-                (string) value;
+                ((string) value).ToLower();
 
             if (File.Exists(path + ".jpg"))
                 return path + ".jpg";
@@ -112,6 +112,8 @@ namespace DW2DB
                 return path + ".jpeg";
             if (File.Exists(path + ".png"))
                 return path + ".png";
+            if (File.Exists(path + ".gif"))
+                return path + ".gif";
             return null;
         }
 
