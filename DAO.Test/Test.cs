@@ -63,6 +63,50 @@ namespace DAO.Test
         [Fact]
         public void Fill()
         {
+            //мутации
+            Dictionary<KeyValuePair<string,string>,string> Mutation = new Dictionary<KeyValuePair<string, string>, string>()
+            {
+                {new KeyValuePair<string, string>("Черримон","Зудомон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","МастерТираномон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","МеталГреймон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","Увамон"),"Вадемон"  },
+
+                {new KeyValuePair<string, string>("Паппетмон","Зудомон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","МастерТираномон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","МеталГреймон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","Увамон"),"Вадемон"  },
+
+
+                {new KeyValuePair<string, string>("Черримон","БойГреймон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","МаринеАнгемон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","Омнимон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","Пречиомон"),"Вадемон"  },
+
+
+
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Грифонмон"),"Янмамон"  },
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Роземон"),"Янмамон"  },
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Баихумон"),"СэндЯнмамон"  },
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","МеталГарурумон"),"СэндЯнмамон"  },
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","ПринцМамемон"),"СэндЯнмамон"  },
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","СаберЛеомон"),"СэндЯнмамон"  },
+            };
+            Dictionary<KeyValuePair<string, string>, string> MutationEng = new Dictionary<KeyValuePair<string, string>, string>();
+
+            foreach (var mutation in Mutation)
+            {
+                MutationEng.Add(new KeyValuePair<string, string>(DB.Digimons.FirstOrDefault(x=>x.NameRus == mutation.Key.Key).NameEng,
+                    DB.Digimons.FirstOrDefault(x => x.NameRus == mutation.Key.Value).NameEng), 
+                    DB.Digimons.FirstOrDefault(x => x.NameRus == mutation.Value).NameEng);
+            }
+
+            foreach (var mutationEng in MutationEng)
+            {
+                DB.DigivolvesDNA.Add(new DigivolveDNA(mutationEng.Key.Key, mutationEng.Key.Value, mutationEng.Value));
+            }
+
+            
+
             var rookie = new List<DigimonTemp>()
             {
                 new DigimonTemp("Агумон", "", "", "ВА", Rank.Rookie),
@@ -1871,7 +1915,12 @@ namespace DAO.Test
                             throw new ArgumentOutOfRangeException();
                     }
 
-                    if (result == null)
+                    if (result == null
+//                        && !DB.DigivolvesDNA.Any(
+//                            x => x.DigimonParent1Id == parent1.NameEng && x.DigimonParent2Id == parent2.NameEng)
+//                        && !DB.DigivolvesDNA.Any(
+//                            x => x.DigimonParent2Id == parent1.NameEng && x.DigimonParent1Id == parent2.NameEng)
+                            && strResult != "МУ")
                     {
                         errors.Add(parent11.NameEng+"-"+parent11.NameRus + "-" + parent11.Rank);
                         errors.Add(parent22.NameEng+"-"+parent22.NameRus + "-" + parent22.Rank);
