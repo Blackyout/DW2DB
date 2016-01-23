@@ -20,4 +20,6 @@
     <v:String x:Key="Skill">Умение</v:String>
     <v:String x:Key="Description">Описание</v:String>
     <v:String x:Key="Domain">Домен</v:String>
+    <v:String x:Key="DigivolveFrom">Эволюция из</v:String>
+    <v:String x:Key="DigivolveTo">Эволюция в</v:String>
 </ResourceDictionary>

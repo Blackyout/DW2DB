@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using DW2DB.Annotations;
 using DW2DB.ViewModels;
 
@@ -14,6 +16,8 @@ namespace DW2DB
 {
     public class AllDigimonsVM : INotifyPropertyChanged
     {
+        public ICommand NavigateToCmd { get; set; }
+
         public DigimonVM SelectedItem
         {
             get { return _selectedItem; }
@@ -31,12 +35,32 @@ namespace DW2DB
 
         public AllDigimonsVM()
         {
+            NavigateToCmd = new DelegateCommand<DigimonVM>(DoNavigateTo);
+
+
             AllDigimons = new ObservableCollection<DigimonVM>(DB.DB.Digimons.Select(x => new DigimonVM(x)));
             foreach (var allDigimon in AllDigimons)
             {
+                //Ищем все скилы и проставляем
                 allDigimon.Skills = new ObservableCollection<SkillVM>(DB.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new SkillVM(x)));
+                //Ищем все локации и проставляем
                 allDigimon.Locations = new ObservableCollection<LocationVM>(DB.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new LocationVM(x)));
+                //Ищем дигимонов из которых превращается конкретно этот
+                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
+                    DB.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.Id)
+                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.Id == x.DigimonFromId),x.DP)));
+                //Ищем дигимонов в которых превращается конкретно этот
+                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
+                    DB.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.Id)
+                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.Id == x.DigimonToId),x.DP)));
+
             }
+        }
+
+        private void DoNavigateTo(DigimonVM obj)
+        {
+            NameFilter = string.Empty;
+            SelectedItem = obj;
         }
 
 
@@ -65,6 +89,7 @@ namespace DW2DB
             set
             {
                 _nameFilter = value;
+                SelectedItem = null;
                 OnPropertyChanged(nameof(NameFilter));
                 OnPropertyChanged(nameof(FilteredDigimons));
             }

@@ -15,6 +15,8 @@ namespace DW2DB.ViewModels
     {
         private ObservableCollection<SkillVM> _skills;
         private ObservableCollection<LocationVM> _locations;
+        private ObservableCollection<DigivolveDigimonVM> _digivolveFrom;
+        private ObservableCollection<DigivolveDigimonVM> _digivolveTo;
         public Digimon Source { get; set; }
 
         public DigimonVM(Digimon source)
@@ -75,6 +77,27 @@ namespace DW2DB.ViewModels
             }
         }
 
+        public ObservableCollection<DigivolveDigimonVM> DigivolveFrom
+        {
+            get { return _digivolveFrom; }
+            set
+            {
+                _digivolveFrom = value;
+                OnPropertyChanged(nameof(DigivolveFrom));
+            }
+        }
+
+        public ObservableCollection<DigivolveDigimonVM> DigivolveTo
+        {
+            get { return _digivolveTo; }
+            set
+            {
+                _digivolveTo = value;
+                OnPropertyChanged(nameof(DigivolveTo));
+            }
+        }
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -83,4 +106,19 @@ namespace DW2DB.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+    public class DigivolveDigimonVM
+    {
+        public DigivolveDigimonVM(DigimonVM digimon, int dp)
+        {
+            Digimon = digimon;
+            DP = dp;
+        }
+
+        public DigimonVM Digimon { get; set; }
+
+        public int DP { get; set; }
+    }
+
+
 }

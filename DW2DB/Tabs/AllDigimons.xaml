@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:DW2DB"
              xmlns:gif="http://wpfanimatedgif.codeplex.com"
+             xmlns:myAttachedProperties="clr-namespace:DW2DB.MyAttachedProperties"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AllDigimonsVM}"
              MinHeight="300" MinWidth="500">
     <UserControl.Resources>
@@ -18,18 +19,38 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="0.5*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <TextBlock Margin="3" VerticalAlignment="Center" Text="{DynamicResource Digimon}"/>
-        <!--<TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding NameFilter}"/>-->
-        <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="3" Text="{Binding NameFilter,UpdateSourceTrigger=PropertyChanged}" />
-        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Margin="3" VerticalAlignment="Center" Text="{DynamicResource Digimon}"/>
+            <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="3" Text="{Binding NameFilter,UpdateSourceTrigger=PropertyChanged}" />
+        </Grid>
+        
+       
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
                   SelectedItem="{Binding SelectedItem}" IsReadOnly="True"
+                  myAttachedProperties:SelectingItemAttachedProperty.SelectingItem="{Binding SelectedItem}"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                               ItemsSource="{Binding Path=FilteredDigimons}">
+            <DataGrid.CellStyle>
+                <Style TargetType="{x:Type DataGridCell}">
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.HighlightTextBrushKey}}" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource Digimon}"  Width="2*" Binding="{Binding Path=Name, Mode=TwoWay}">
                     <DataGridTextColumn.HeaderStyle>
@@ -65,7 +86,7 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false" IsReadOnly="True"
+        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Margin="3" AutoGenerateColumns="false" IsReadOnly="True"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                               ItemsSource="{Binding Path=SelectedItem.Skills}">
@@ -104,12 +125,84 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="3" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid Grid.Row="3"  Grid.Column="0" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
                   IsReadOnly="True"
                               ItemsSource="{Binding Path=SelectedItem.Locations}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource Domain}"  Width="2*" Binding="{Binding Path=Name, Mode=OneWay}">
+                <DataGridTextColumn Header="{DynamicResource Domain}"  Width="2*"  Binding="{Binding Path=Name, Mode=OneWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <DataGrid Grid.Row="3"  Grid.Column="1" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
+                  IsReadOnly="True"
+                              ItemsSource="{Binding Path=SelectedItem.DigivolveFrom}">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="{DynamicResource DigivolveFrom}" Width="4*">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Hyperlink Command="{Binding DataContext.NavigateToCmd, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                           CommandParameter="{Binding Digimon}">
+                                     <TextBlock Text="{Binding Path=Digimon.Name, Mode=OneWay}" />
+                                </Hyperlink>    
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="DP"  Width="*"  Binding="{Binding Path=DP, Mode=OneWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+            </DataGrid.Columns>
+            
+            
+        </DataGrid>
+
+        <DataGrid Grid.Row="3"  Grid.Column="2" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
+                  IsReadOnly="True"
+                              ItemsSource="{Binding Path=SelectedItem.DigivolveTo}">
+            <DataGrid.Columns>
+
+                <DataGridTemplateColumn Header="{DynamicResource DigivolveTo}" Width="4*">
+                    <DataGridTemplateColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                                Value="Center" />
+                        </Style>
+                    </DataGridTemplateColumn.HeaderStyle>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <Hyperlink Command="{Binding DataContext.NavigateToCmd, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"
+                                           CommandParameter="{Binding Digimon}">
+                                     <TextBlock Text="{Binding Path=Digimon.Name, Mode=OneWay}" />
+                                </Hyperlink>    
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+              
+                <DataGridTextColumn Header="DP"  Width="*"  Binding="{Binding Path=DP, Mode=OneWay}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -121,7 +214,7 @@
         </DataGrid>
 
 
-        <Image Grid.Row="0" Grid.Column="2" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
+        <Image Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
                gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
     </Grid>
 </UserControl>

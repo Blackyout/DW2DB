@@ -18,7 +18,6 @@
             <TabItem Header="{DynamicResource AllDigimons}">
                     <local:AllDigimons DataContext="{Binding AllDigimonsVM}"/>
             </TabItem>
-            <TabItem Header="{DynamicResource Digivolve}"></TabItem>
             <TabItem Header="{DynamicResource DnaDigivolve}"></TabItem>
         </TabControl>
       
