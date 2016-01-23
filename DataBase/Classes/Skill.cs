@@ -1,4 +1,4 @@
-namespace DB
+namespace DataBase
 {
     public class Skill
     {
@@ -62,5 +62,4 @@ namespace DB
         /// </summary>
         Assist
     }
-
 }

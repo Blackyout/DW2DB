@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DB
+namespace DataBase
 {
    
     public static class ClassHelper

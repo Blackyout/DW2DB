@@ -1,4 +1,4 @@
-namespace DB
+namespace DataBase
 {
     public class Digivolve
     {

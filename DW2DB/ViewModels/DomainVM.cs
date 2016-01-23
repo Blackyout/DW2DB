@@ -1,5 +1,5 @@
 using System.ComponentModel;
-using DB;
+using DataBase;
 using DW2DB.Annotations;
 
 namespace DW2DB.ViewModels

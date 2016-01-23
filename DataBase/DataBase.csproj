@@ -44,6 +44,7 @@
     <Compile Include="Classes\ClassHelper.cs" />
     <Compile Include="Classes\Digimon.cs" />
     <Compile Include="Classes\Digivolve.cs" />
+    <Compile Include="Classes\DigivolveDNA.cs" />
     <Compile Include="Classes\Domain.cs" />
     <Compile Include="Classes\Location.cs" />
     <Compile Include="Classes\Skill.cs" />

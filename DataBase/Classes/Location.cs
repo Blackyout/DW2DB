@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace DB
+namespace DataBase
 {
     public class Location
     {

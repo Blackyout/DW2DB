@@ -1,4 +1,4 @@
-namespace DB
+namespace DataBase
 {
     /// <summary>
     /// Класс дигимона

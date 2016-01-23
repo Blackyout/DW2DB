@@ -4,10 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DB
+namespace DataBase
 {
     public class DB
     {
+        public static List<DigivolveDNA> DigivolvesDNA = new List<DigivolveDNA>();
+
+
         public static List<Skill> Skills = new List<Skill>()
         {
             new Skill("Agumon",SkillType.Attack,"Перцовое дыхание","Pepper Breath","Стреляет огненным шаром", "Small fireball attack", 8,20.5m,SkillSource.Wild),

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using DB;
+using DataBase;
 using DW2DB.Annotations;
 
 namespace DW2DB.ViewModels
