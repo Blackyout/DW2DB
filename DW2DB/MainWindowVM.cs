@@ -6,6 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DW2DB.Annotations;
+using DW2DB.Tabs;
 
 namespace DW2DB
 {
@@ -14,9 +15,11 @@ namespace DW2DB
         public MainWindowVM()
         {
             AllDigimonsVM = new AllDigimonsVM();
+            DigivolveDNAVM = new DigivolveDNAVM();
         }
 
         public AllDigimonsVM AllDigimonsVM { get; set; }
+        public DigivolveDNAVM DigivolveDNAVM { get; set; }
 
 
 

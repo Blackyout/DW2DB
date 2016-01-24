@@ -22,4 +22,9 @@
     <v:String x:Key="Domain">Domain</v:String>
     <v:String x:Key="DigivolveFrom">Digivolve from</v:String>
     <v:String x:Key="DigivolveTo">Digivolve to</v:String>
+    <v:String x:Key="Parent1">First parent</v:String>
+    <v:String x:Key="Parent2">Second parent</v:String>
+    <v:String x:Key="Result">Result</v:String>
+    <v:String x:Key="Options">Options</v:String>
+    <v:String x:Key="AP">Attack power</v:String>
 </ResourceDictionary>

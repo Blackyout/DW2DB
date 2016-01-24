@@ -18,9 +18,9 @@ namespace DW2DB.Tabs
     /// <summary>
     /// Interaction logic for Digivolve.xaml
     /// </summary>
-    public partial class Digivolve : UserControl
+    public partial class DigivolveDNA : UserControl
     {
-        public Digivolve()
+        public DigivolveDNA()
         {
             InitializeComponent();
         }

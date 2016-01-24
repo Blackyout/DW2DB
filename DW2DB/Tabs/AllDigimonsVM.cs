@@ -25,6 +25,7 @@ namespace DW2DB
             {
                 _selectedItem = value; 
                 OnPropertyChanged(nameof(SelectedItem));
+                OnPropertyChanged(nameof(LocationStr));
             }
         }
 
@@ -61,6 +62,15 @@ namespace DW2DB
         {
             NameFilter = string.Empty;
             SelectedItem = obj;
+        }
+
+        public string LocationStr
+        {
+            get
+            {
+                if(SelectedItem == null) return String.Empty;
+                return String.Join(";",SelectedItem.Locations.Select(x => x.Name));
+            }
         }
 
 

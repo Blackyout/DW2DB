@@ -15,16 +15,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="110"/>
+            <RowDefinition Height="90"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="0.5*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="0.75*"/>
+            <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
-        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -34,7 +33,7 @@
         </Grid>
         
        
-        <DataGrid Grid.Row="1" Grid.ColumnSpan="3" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
+        <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
                   SelectedItem="{Binding SelectedItem}" IsReadOnly="True"
                   myAttachedProperties:SelectingItemAttachedProperty.SelectingItem="{Binding SelectedItem}"
                   CanUserAddRows="False" CanUserDeleteRows="False"
@@ -86,12 +85,12 @@
                 </DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="2" Grid.ColumnSpan="3" Grid.Column="0" Margin="3" AutoGenerateColumns="false" IsReadOnly="True"
+        <DataGrid Grid.Row="4"  Grid.Column="0" Grid.ColumnSpan="3" Margin="3" AutoGenerateColumns="false" IsReadOnly="True"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                               ItemsSource="{Binding Path=SelectedItem.Skills}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource Type}"  Width="2*" Binding="{Binding Path=Type, Mode=TwoWay}">
+                <DataGridTextColumn Header="{DynamicResource Type}"  Width="70" Binding="{Binding Path=Type, Mode=TwoWay}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -99,7 +98,7 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="{DynamicResource Skill}" Width="2*" Binding="{Binding Path=Name, Mode=TwoWay}">
+                <DataGridTextColumn Header="{DynamicResource Skill}" Width="150" Binding="{Binding Path=Name, Mode=TwoWay}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -107,6 +106,23 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="MP" Width="40" Binding="{Binding Path=Source.MP, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="{DynamicResource AP}" Width="80" Binding="{Binding Path=Source.AP, Mode=TwoWay}">
+                    <DataGridTextColumn.HeaderStyle>
+                        <Style TargetType="DataGridColumnHeader">
+                            <Setter Property="HorizontalContentAlignment"
+                 Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.HeaderStyle>
+                </DataGridTextColumn>
+
                 <DataGridTextColumn Header="{DynamicResource Description}" Width="4*" Binding="{Binding Path=Description, Mode=TwoWay}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
@@ -115,33 +131,26 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="MP" Width="*" Binding="{Binding Path=Source.MP, Mode=TwoWay}">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment"
-                 Value="Center" />
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
+               
             </DataGrid.Columns>
         </DataGrid>
-        <DataGrid Grid.Row="3"  Grid.Column="0" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
-                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
-                  IsReadOnly="True"
-                              ItemsSource="{Binding Path=SelectedItem.Locations}">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="{DynamicResource Domain}"  Width="2*"  Binding="{Binding Path=Name, Mode=OneWay}">
-                    <DataGridTextColumn.HeaderStyle>
-                        <Style TargetType="DataGridColumnHeader">
-                            <Setter Property="HorizontalContentAlignment"
-                 Value="Center" />
-                        </Style>
-                    </DataGridTextColumn.HeaderStyle>
-                </DataGridTextColumn>
-            </DataGrid.Columns>
-        </DataGrid>
+<!--        <DataGrid Grid.Row="3"  Grid.Column="0" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"-->
+<!--                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" -->
+<!--                  IsReadOnly="True"-->
+<!--                              ItemsSource="{Binding Path=SelectedItem.Locations}">-->
+<!--            <DataGrid.Columns>-->
+<!--                <DataGridTextColumn Header="{DynamicResource Domain}"  Width="2*"  Binding="{Binding Path=Name, Mode=OneWay}">-->
+<!--                    <DataGridTextColumn.HeaderStyle>-->
+<!--                        <Style TargetType="DataGridColumnHeader">-->
+<!--                            <Setter Property="HorizontalContentAlignment"-->
+<!--                 Value="Center" />-->
+<!--                        </Style>-->
+<!--                    </DataGridTextColumn.HeaderStyle>-->
+<!--                </DataGridTextColumn>-->
+<!--            </DataGrid.Columns>-->
+<!--        </DataGrid>-->
 
-        <DataGrid Grid.Row="3"  Grid.Column="1" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid Grid.Row="2"  Grid.Column="0" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
                   IsReadOnly="True"
                               ItemsSource="{Binding Path=SelectedItem.DigivolveFrom}">
@@ -177,7 +186,7 @@
             
         </DataGrid>
 
-        <DataGrid Grid.Row="3"  Grid.Column="2" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
+        <DataGrid Grid.Row="2"  Grid.Column="1" Margin="3" CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  AutoGenerateColumns="false" 
                   IsReadOnly="True"
                               ItemsSource="{Binding Path=SelectedItem.DigivolveTo}">
@@ -214,7 +223,31 @@
         </DataGrid>
 
 
-        <Image Grid.Row="0" Grid.Column="3" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
+        <Grid Grid.Row="0" Width="390" Grid.Column="2" Grid.RowSpan="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="450"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Border Grid.Row="0"  Margin="3" BorderThickness="3" BorderBrush="Blue">
+                <Image Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
                gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+            </Border>
+
+
+            <GroupBox Padding="10" Margin="3" Header="{DynamicResource Location}" Grid.Row="1">
+                <TextBlock Text="{Binding LocationStr}" TextWrapping="WrapWithOverflow"/>
+
+            </GroupBox>
+
+
+        </Grid>
+
+       
+        
+        
+
+        
+        
+        
     </Grid>
 </UserControl>

@@ -4,8 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DW2DB"
+        xmlns:tabs="clr-namespace:DW2DB.Tabs"
         mc:Ignorable="d"
-        Title="{DynamicResource Title}" Height="500" Width="800" d:DataContext="{d:DesignInstance local:MainWindowVM }">
+        Title="{DynamicResource Title}" MinHeight="700" MinWidth="1000" d:DataContext="{d:DesignInstance local:MainWindowVM }">
     <DockPanel>
         <DockPanel.DataContext>
             <local:MainWindowVM/>
@@ -18,7 +19,9 @@
             <TabItem Header="{DynamicResource AllDigimons}">
                     <local:AllDigimons DataContext="{Binding AllDigimonsVM}"/>
             </TabItem>
-            <TabItem Header="{DynamicResource DnaDigivolve}"></TabItem>
+            <TabItem Header="{DynamicResource DnaDigivolve}">
+                <tabs:DigivolveDNA DataContext="{Binding DigivolveDNAVM}"/>
+            </TabItem>
         </TabControl>
       
     </DockPanel>

@@ -22,4 +22,9 @@
     <v:String x:Key="Domain">Домен</v:String>
     <v:String x:Key="DigivolveFrom">Эволюция из</v:String>
     <v:String x:Key="DigivolveTo">Эволюция в</v:String>
+    <v:String x:Key="Parent1">Первый родитель</v:String>
+    <v:String x:Key="Parent2">Второй родитель</v:String>
+    <v:String x:Key="Result">Результат</v:String>
+    <v:String x:Key="Options">Варианты</v:String>
+    <v:String x:Key="AP">Сила атаки</v:String>
 </ResourceDictionary>
