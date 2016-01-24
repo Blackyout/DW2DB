@@ -18,7 +18,7 @@ namespace DataBase
             NameRus = nameRus;
             Rank = rank;
             Type = type;
-            Specialty = speciality;
+            Speciality = speciality;
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace DataBase
         /// <summary>
         /// Специальность
         /// </summary>
-        public Speciality Specialty { get; set; }
+        public Speciality Speciality { get; set; }
 
     }
 

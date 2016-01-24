@@ -33,13 +33,13 @@ namespace DW2DB.ViewModels
                     Name = Source.NameRus;
                     Rank = ClassHelper.RankRus[Source.Rank];
                     Type = ClassHelper.TypeRus[Source.Type];
-                    Speciality = ClassHelper.SpecialityRus[Source.Specialty];
+                    Speciality = ClassHelper.SpecialityRus[Source.Speciality];
                     break;
                 default:
                     Name = Source.NameEng;
                     Rank = ClassHelper.RankEng[Source.Rank];
                     Type = ClassHelper.TypeEng[Source.Type];
-                    Speciality = ClassHelper.SpecialityEng[Source.Specialty];
+                    Speciality = ClassHelper.SpecialityEng[Source.Speciality];
                     break;
             }
             OnPropertyChanged(nameof(Name));
