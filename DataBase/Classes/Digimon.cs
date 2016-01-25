@@ -1,3 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace DataBase
 {
     /// <summary>
@@ -5,8 +10,15 @@ namespace DataBase
     /// </summary>
     public class Digimon
     {
+        public Digimon()
+        {
+            Id = Guid.NewGuid(); 
+        }
+
+
         public Digimon(string nameRus, string nameEng, Rank rank)
         {
+            Id = Guid.NewGuid();
             NameEng = nameEng;
             NameRus = nameRus;
             Rank = rank;
@@ -14,6 +26,7 @@ namespace DataBase
 
         public Digimon(string nameRus, string nameEng, Rank rank, Type type, Speciality speciality)
         {
+            Id = Guid.NewGuid();
             NameEng = nameEng;
             NameRus = nameRus;
             Rank = rank;
@@ -21,10 +34,15 @@ namespace DataBase
             Speciality = speciality;
         }
 
-        /// <summary>
-        /// Id будет наименование на английском
-        /// </summary>
-        public string Id => NameEng;
+        public Guid Id { get; set; }
+
+
+//        [NotMapped
+
+//        /// <summary>
+//        /// Id будет наименование на английском
+//        /// </summary>
+//        public string Id => NameEng;
 
         /// <summary>
         /// Наименование на английском
@@ -50,6 +68,17 @@ namespace DataBase
         /// Специальность
         /// </summary>
         public Speciality Speciality { get; set; }
+
+        public virtual List<Skill> Skills { get; set; } 
+
+        public virtual List<Location> Locations { get; set; }
+//
+        public virtual List<Digivolve> DigivolesFrom { get; set; }
+        public virtual List<Digivolve> DigivolesTo { get; set; }
+        //public virtual List<Digivolve> Digivoles { get; set; }
+         
+        
+         
 
     }
 

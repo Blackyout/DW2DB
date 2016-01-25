@@ -1,10 +1,17 @@
+using System;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace DataBase
 {
     public class Skill
     {
+        public Skill()
+        {
+        }
+        
         public Skill(string digimonId, SkillType type, string nameRus, string nameEng, string descriptionRus, string descriptionEng, int mp,decimal ap, SkillSource skillSource = SkillSource.Native)
         {
-            DigimonId = digimonId;
+           // DigimonId = digimonId;
             Type = type;
             NameRus = nameRus;
             NameEng = nameEng;
@@ -14,7 +21,13 @@ namespace DataBase
             AP = ap;
         }
 
-        public string DigimonId { get; set; }
+
+//        [NotMapped]
+//        public string DigimonId { get; set; }
+
+        public Guid Id { get; set; }
+        
+        public virtual Digimon Digimon { get; set; }
 
         public SkillType Type { get; set; }
 

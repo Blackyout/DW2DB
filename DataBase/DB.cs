@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DataBase.Migrations;
 
 namespace DataBase
 {
-    public static class DB
+    public class DB : IDisposable
     {
 
-        public static List<DigivolveDNA> DigivolvesDNA = new List<DigivolveDNA>();
+        private  DW2DBContext dw2DbContext { get; set; }
 
+        public void Init()
+        {
+            //Установка инициализатора
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<DW2DBContext, Configuration>());
+            dw2DbContext = new DW2DBContext();
+        }
+
+        public void Dispose()
+        {
+            dw2DbContext.Dispose();
+        }
+        
+        public static List<DigivolveDNA> DigivolvesDNA = new List<DigivolveDNA>();
 
         public static List<Skill> Skills = new List<Skill>()
         {
@@ -26,7 +41,8 @@ namespace DataBase
 
         public static Domain GetDomain(string domainId)
         {
-            return Domains.FirstOrDefault(x => x.Id == domainId);
+            return new Domain();
+            //return Domains.FirstOrDefault(x => x.Id == domainId);
         }
 
 
@@ -225,7 +241,7 @@ namespace DataBase
             new Digivolve("Lillymon","Rosemon",0),
             new Digivolve("MagnaAngemon","Seraphimon",0),
             new Digivolve("Mamemon","PrinceMamemon",0),
-            new Digivolve("Mamothmon","SkullMammothmon",0),
+            new Digivolve("Mammothmon","SkullMammothmon",0),
             new Digivolve("MarineDevimon","Pukumon",0),
             new Digivolve("MasterTyrannomon","WarGreymon",0),
             new Digivolve("MegaKabuterimon","HerculesKabuterimon",0),
@@ -2367,7 +2383,6 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
                 throw new ApplicationException();
             return digimonTemp;
         }
-
 
 
     }
