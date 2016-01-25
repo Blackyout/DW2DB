@@ -36,14 +36,6 @@ namespace DataBase
 
         public Guid Id { get; set; }
 
-
-//        [NotMapped
-
-//        /// <summary>
-//        /// Id будет наименование на английском
-//        /// </summary>
-//        public string Id => NameEng;
-
         /// <summary>
         /// Наименование на английском
         /// </summary>
@@ -74,9 +66,11 @@ namespace DataBase
         public virtual List<Location> Locations { get; set; }
         public virtual List<Digivolve> DigivolesFrom { get; set; }
         public virtual List<Digivolve> DigivolesTo { get; set; }
-         
-        
-         
+
+        public virtual List<DigivolveDNA> DigivolveDnas { get; set; }
+        [MaxLength]
+        public virtual byte[] Picture { get; set; }
+
 
     }
 

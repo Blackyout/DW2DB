@@ -15,6 +15,7 @@ namespace DataBase
 
 
         public virtual DbSet<Digimon> Digimons { get; set; }
+        public virtual DbSet<DigivolveDNA> DigivolveDnas { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder mb)
         {

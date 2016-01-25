@@ -35,35 +35,21 @@ namespace DW2DB.Tabs
             ClearParent1CMD = new DelegateCommand(ClearParent1);
             ClearParent2CMD = new DelegateCommand(ClearParent2);
             ClearResultCMD = new DelegateCommand(ClearResult);
-            LoadCmd = new DelegateCommand(DoLoad);
-
-            AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
-            AllDigimons = new ObservableCollection<DigimonVM>();
-            Digimons = new ObservableCollection<DigimonVM>();
-
-
-            //DB.Fill();
-
-           
-
+           // LoadCmd = new DelegateCommand(DoLoad);
+           DoLoad();
 
         }
 
         private void DoLoad()
         {
-            DB.Fill();
             AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(
-               DB.DigivolvesDNA.Select(x => new DigivolveDNAOptionVM(x))
-               );
+               DBLoader.AllOptions);
 
             AllDigimons = new ObservableCollection<DigimonVM>(
-                DataBase.DB.Digimons.
-                Select(x => new DigimonVM(x)));
+                DBLoader.AllDigimons);
 
             //отсеиваем новичков
-            Digimons = new ObservableCollection<DigimonVM>(
-                DataBase.DB.Digimons.Where(x => x.Rank != Rank.Rookie).
-                Select(x => new DigimonVM(x)));
+            Digimons = new ObservableCollection<DigimonVM>(DBLoader.NoRookie);
         }
 
         private void ClearResult()
@@ -91,9 +77,9 @@ namespace DW2DB.Tabs
                 if (value != null)
                 {
 
-                    _parent1 = Digimons.FirstOrDefault(x => x.Source.NameEng == value.Parent1.Source.NameEng);
-                    _parent2 = Digimons.FirstOrDefault(x => x.Source.NameEng == value.Parent2.Source.NameEng);
-                    _result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == value.Result.Source.NameEng);
+                    _parent1 = SelectedOption.Parents[0];
+                    _parent2 = SelectedOption.Parents[1];
+                    _result = SelectedOption.Result;
                 }
 
                 OnPropertyChanged(nameof(SelectedOption));
@@ -122,16 +108,15 @@ namespace DW2DB.Tabs
         {
             if (Parent1 != null && Parent2 != null && AllOptions.Any())
             {
-                _result = AllDigimons.FirstOrDefault(y => y.Source.NameEng ==
-                AllOptions.FirstOrDefault(
-                    x =>
-                    (x.Parent1.Source.NameEng == Parent1.Source.NameEng &&
-                    x.Parent2.Source.NameEng == Parent2.Source.NameEng)
-                    ||
-                     (x.Parent2.Source.NameEng == Parent1.Source.NameEng &&
-                    x.Parent1.Source.NameEng == Parent2.Source.NameEng)
-                    ).Result.Source.NameEng);
-                
+                var temp = AllOptions.FirstOrDefault(x => x.Parents.Contains(Parent1) && x.Parents.Contains(Parent2));
+                if (temp != null)
+                    _result = temp.Result;
+                else
+                    _result = null;
+            }
+            else
+            {
+                _result = null;
             }
         }
 
@@ -155,8 +140,16 @@ namespace DW2DB.Tabs
             set
             {
                 _result = value;
+                if (_result == null)
+                {
+                    _parent1 = null;
+                    _parent2 = null;
+                }
+
                 SelectedOption = null;
                 OnPropertyChanged(nameof(Result));
+                OnPropertyChanged(nameof(Parent1));
+                OnPropertyChanged(nameof(Parent2));
                 OnPropertyChanged(nameof(FilteredOptions));
             }
         }
@@ -190,21 +183,13 @@ namespace DW2DB.Tabs
                 return new ObservableCollection<DigivolveDNAOptionVM>(
                     AllOptions.Where(
                     x=>(Parent1==null && Parent2 == null && Result == null)
-                    || (
-                    
-                        (Parent1 == null || x.Source.DigimonParent1Id == Parent1.Source.NameEng)
-                    && (Parent2 == null || x.Source.DigimonParent2Id == Parent2.Source.NameEng)
-                    && (Result == null || x.Source.DigimonChildId == Result.Source.NameEng)
-                            )
-                            ||
-                            (
-
-                        (Parent1 == null || x.Source.DigimonParent2Id == Parent1.Source.NameEng)
-                    && (Parent2 == null || x.Source.DigimonParent1Id == Parent2.Source.NameEng)
-                    && (Result == null || x.Source.DigimonChildId == Result.Source.NameEng)
-                            )
-
-                            ));
+                    ||
+                    (
+                        (Parent1 == null || x.Parents.Contains(Parent1))
+                    && (Parent2 == null || x.Parents.Contains(Parent2))
+                    && (Result == null || x.Result == Result)
+                    )
+                    ));
             }
         }
 

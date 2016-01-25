@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using DataBase;
 using DW2DB.Annotations;
 using DW2DB.ViewModels;
 
@@ -25,7 +26,6 @@ namespace DW2DB
             {
                 _selectedItem = value; 
                 OnPropertyChanged(nameof(SelectedItem));
-                OnPropertyChanged(nameof(LocationStr));
             }
         }
 
@@ -38,24 +38,30 @@ namespace DW2DB
         {
             NavigateToCmd = new DelegateCommand<DigimonVM>(DoNavigateTo);
 
+            AllDigimons = new ObservableCollection<DigimonVM>(DBLoader.AllDigimons);
 
-            AllDigimons = new ObservableCollection<DigimonVM>(DataBase.DB.Digimons.Select(x => new DigimonVM(x)));
-            foreach (var allDigimon in AllDigimons)
-            {
-                //Ищем все скилы и проставляем
-                allDigimon.Skills = new ObservableCollection<SkillVM>(DataBase.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new SkillVM(x)));
-                //Ищем все локации и проставляем
-                allDigimon.Locations = new ObservableCollection<LocationVM>(DataBase.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new LocationVM(x)));
-                //Ищем дигимонов из которых превращается конкретно этот
-                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
-                    DataBase.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.NameEng)
-                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),x.DP)));
-                //Ищем дигимонов в которых превращается конкретно этот
-                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
-                    DataBase.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.NameEng)
-                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),x.DP)));
 
-            }
+
+
+//            AllDigimons = new ObservableCollection<DigimonVM>(DataBase.DB.Digimons.Select(x => new DigimonVM()));
+//            foreach (var allDigimon in AllDigimons)
+//            {
+//                //Ищем все скилы и проставляем
+//               // allDigimon.Skills = new ObservableCollection<SkillVM>(
+//               //     DataBase.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new SkillVM()));
+//                
+//                //Ищем все локации и проставляем
+//                //allDigimon.Locations = new ObservableCollection<LocationVM>(DataBase.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new LocationVM(x)));
+//                //Ищем дигимонов из которых превращается конкретно этот
+//                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
+//                    DataBase.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.NameEng)
+//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),x.DP)));
+//                //Ищем дигимонов в которых превращается конкретно этот
+//                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
+//                    DataBase.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.NameEng)
+//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),x.DP)));
+//
+//            }
         }
 
         private void DoNavigateTo(DigimonVM obj)
@@ -63,16 +69,6 @@ namespace DW2DB
             NameFilter = string.Empty;
             SelectedItem = obj;
         }
-
-        public string LocationStr
-        {
-            get
-            {
-                if(SelectedItem == null) return String.Empty;
-                return String.Join(";",SelectedItem.Locations.Select(x => x.Name));
-            }
-        }
-
 
         public ObservableCollection<DigimonVM> AllDigimons
         {

@@ -98,28 +98,5 @@ namespace DW2DB
         }
     }
 
-    [ValueConversion(typeof(string), typeof(string))]
-    public class ImagePathConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            var path = System.AppDomain.CurrentDomain.BaseDirectory + @"\DigimonPic\" + 
-                ((string) value).ToLower();
-
-            if (File.Exists(path + ".jpg"))
-                return path + ".jpg";
-            if (File.Exists(path + ".jpeg"))
-                return path + ".jpeg";
-            if (File.Exists(path + ".png"))
-                return path + ".png";
-            if (File.Exists(path + ".gif"))
-                return path + ".gif";
-            return null;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            return null;
-        }
-    }
+  
 }

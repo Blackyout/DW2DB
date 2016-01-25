@@ -7,11 +7,13 @@ namespace DataBase
     {
         public Skill()
         {
+            Id = Guid.NewGuid();
         }
         
         public Skill(string digimonId, SkillType type, string nameRus, string nameEng, string descriptionRus, 
             string descriptionEng, int mp,decimal ap, SkillSource skillSource = SkillSource.Native)
         {
+            Id = Guid.NewGuid();
             DigimonId = digimonId;
             Type = type;
             NameRus = nameRus;

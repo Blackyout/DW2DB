@@ -70,9 +70,9 @@
     <Compile Include="Classes\Skill.cs" />
     <Compile Include="DB.cs" />
     <Compile Include="DW2DBContext.cs" />
-    <Compile Include="Migrations\201601251237225_init.cs" />
-    <Compile Include="Migrations\201601251237225_init.Designer.cs">
-      <DependentUpon>201601251237225_init.cs</DependentUpon>
+    <Compile Include="Migrations\201601252028562_init.cs" />
+    <Compile Include="Migrations\201601252028562_init.Designer.cs">
+      <DependentUpon>201601252028562_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,8 +85,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201601251237225_init.resx">
-      <DependentUpon>201601251237225_init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201601252028562_init.resx">
+      <DependentUpon>201601252028562_init.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

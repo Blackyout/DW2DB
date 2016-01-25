@@ -17,6 +17,7 @@ namespace DataBase.Migrations
                         Rank = c.Int(nullable: false),
                         Type = c.Int(nullable: false),
                         Speciality = c.Int(nullable: false),
+                        Picture = c.Binary(),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -34,6 +35,31 @@ namespace DataBase.Migrations
                 .ForeignKey("dbo.Digimons", t => t.DigimonTo_Id)
                 .Index(t => t.DigimonFrom_Id)
                 .Index(t => t.DigimonTo_Id);
+            
+            CreateTable(
+                "dbo.DigivolveDNAs",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        Result_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Digimons", t => t.Result_Id)
+                .Index(t => t.Result_Id);
+            
+            CreateTable(
+                "dbo.DigivolveDNAParents",
+                c => new
+                    {
+                        Id = c.Guid(nullable: false),
+                        DigivolveDna_Id = c.Guid(),
+                        Parent_Id = c.Guid(),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.DigivolveDNAs", t => t.DigivolveDna_Id)
+                .ForeignKey("dbo.Digimons", t => t.Parent_Id)
+                .Index(t => t.DigivolveDna_Id)
+                .Index(t => t.Parent_Id);
             
             CreateTable(
                 "dbo.Locations",
@@ -99,18 +125,26 @@ namespace DataBase.Migrations
             DropForeignKey("dbo.Locations", "Digimon_Id", "dbo.Digimons");
             DropForeignKey("dbo.Floors", "Location_Id", "dbo.Locations");
             DropForeignKey("dbo.Locations", "Domain_Id", "dbo.Domains");
+            DropForeignKey("dbo.DigivolveDNAs", "Result_Id", "dbo.Digimons");
+            DropForeignKey("dbo.DigivolveDNAParents", "Parent_Id", "dbo.Digimons");
+            DropForeignKey("dbo.DigivolveDNAParents", "DigivolveDna_Id", "dbo.DigivolveDNAs");
             DropForeignKey("dbo.Digivolves", "DigimonTo_Id", "dbo.Digimons");
             DropForeignKey("dbo.Digivolves", "DigimonFrom_Id", "dbo.Digimons");
             DropIndex("dbo.Skills", new[] { "Digimon_Id" });
             DropIndex("dbo.Floors", new[] { "Location_Id" });
             DropIndex("dbo.Locations", new[] { "Digimon_Id" });
             DropIndex("dbo.Locations", new[] { "Domain_Id" });
+            DropIndex("dbo.DigivolveDNAParents", new[] { "Parent_Id" });
+            DropIndex("dbo.DigivolveDNAParents", new[] { "DigivolveDna_Id" });
+            DropIndex("dbo.DigivolveDNAs", new[] { "Result_Id" });
             DropIndex("dbo.Digivolves", new[] { "DigimonTo_Id" });
             DropIndex("dbo.Digivolves", new[] { "DigimonFrom_Id" });
             DropTable("dbo.Skills");
             DropTable("dbo.Floors");
             DropTable("dbo.Domains");
             DropTable("dbo.Locations");
+            DropTable("dbo.DigivolveDNAParents");
+            DropTable("dbo.DigivolveDNAs");
             DropTable("dbo.Digivolves");
             DropTable("dbo.Digimons");
         }

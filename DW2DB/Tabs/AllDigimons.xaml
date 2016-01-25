@@ -9,7 +9,6 @@
              mc:Ignorable="d" d:DataContext="{d:DesignInstance local:AllDigimonsVM}"
              MinHeight="300" MinWidth="500">
     <UserControl.Resources>
-        <local:ImagePathConverter x:Key="ImagePathConverter" />
         <Style x:Key="HeaderStyle" TargetType="DataGridColumnHeader">
             <Setter Property="HorizontalContentAlignment"
                  Value="Center" />
@@ -140,6 +139,7 @@
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                   ItemsSource="{Binding Path=FilteredDigimons}"
                   CellStyle="{StaticResource CellStyle}"
+                  SelectionMode="Single"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}">
 
             <DataGrid.Columns>
@@ -193,11 +193,10 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Border Grid.Row="0"  Margin="3" BorderThickness="3" BorderBrush="Blue">
-                <Image Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
-               gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.NameEng,Converter={StaticResource ImagePathConverter}}"/>
+                <Image Margin="3" Source="{Binding SelectedItem.Source.Picture}"/>
             </Border>
             <GroupBox Padding="10" Margin="3" Header="{DynamicResource Location}" Grid.Row="1">
-                <TextBlock Text="{Binding LocationStr}" TextWrapping="WrapWithOverflow"/>
+                <TextBlock Text="{Binding SelectedItem.LocationStr}" TextWrapping="WrapWithOverflow"/>
             </GroupBox>
         </Grid>
         
