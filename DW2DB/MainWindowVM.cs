@@ -24,6 +24,10 @@ namespace DW2DB
 
 
 
+
+
+
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
