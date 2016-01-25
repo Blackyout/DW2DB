@@ -125,11 +125,11 @@
         </GroupBox>
      
         <Image Grid.Row="3" Grid.Column="0" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
-               gif:ImageBehavior.AnimatedSource="{Binding Parent1.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+               gif:ImageBehavior.AnimatedSource="{Binding Parent1.Source.NameEng,Converter={StaticResource ImagePathConverter}}"/>
         <Image Grid.Row="3" Grid.Column="1" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
-               gif:ImageBehavior.AnimatedSource="{Binding Parent2.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+               gif:ImageBehavior.AnimatedSource="{Binding Parent2.Source.NameEng,Converter={StaticResource ImagePathConverter}}"/>
         <Image Grid.Row="3" Grid.Column="2" Grid.RowSpan="4" Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
-               gif:ImageBehavior.AnimatedSource="{Binding Result.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+               gif:ImageBehavior.AnimatedSource="{Binding Result.Source.NameEng,Converter={StaticResource ImagePathConverter}}"/>
         
         <Button Command="{Binding LoadCmd}" Grid.Row="4" FontSize="25" Margin="3" Padding="5" Grid.ColumnSpan="4">Загрузить</Button>
         

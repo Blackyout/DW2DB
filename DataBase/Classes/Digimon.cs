@@ -72,12 +72,8 @@ namespace DataBase
         public virtual List<Skill> Skills { get; set; } 
 
         public virtual List<Location> Locations { get; set; }
-        //
-       // [ForeignKey("DigimonTo")]
         public virtual List<Digivolve> DigivolesFrom { get; set; }
-        //[ForeignKey("DigimonFrom")]
         public virtual List<Digivolve> DigivolesTo { get; set; }
-        //public virtual List<Digivolve> Digivoles { get; set; }
          
         
          

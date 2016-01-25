@@ -42,18 +42,18 @@ namespace DW2DB
             AllDigimons = new ObservableCollection<DigimonVM>(DataBase.DB.Digimons.Select(x => new DigimonVM(x)));
             foreach (var allDigimon in AllDigimons)
             {
-//                //Ищем все скилы и проставляем
-//                allDigimon.Skills = new ObservableCollection<SkillVM>(DataBase.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new SkillVM(x)));
-//                //Ищем все локации и проставляем
-//                allDigimon.Locations = new ObservableCollection<LocationVM>(DataBase.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.Id).Select(x=>new LocationVM(x)));
-//                //Ищем дигимонов из которых превращается конкретно этот
-//                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
-//                    DataBase.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.Id)
-//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.Id == x.DigimonFromId),x.DP)));
-//                //Ищем дигимонов в которых превращается конкретно этот
-//                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
-//                    DataBase.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.Id)
-//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.Id == x.DigimonToId),x.DP)));
+                //Ищем все скилы и проставляем
+                allDigimon.Skills = new ObservableCollection<SkillVM>(DataBase.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new SkillVM(x)));
+                //Ищем все локации и проставляем
+                allDigimon.Locations = new ObservableCollection<LocationVM>(DataBase.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new LocationVM(x)));
+                //Ищем дигимонов из которых превращается конкретно этот
+                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
+                    DataBase.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.NameEng)
+                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),x.DP)));
+                //Ищем дигимонов в которых превращается конкретно этот
+                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
+                    DataBase.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.NameEng)
+                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),x.DP)));
 
             }
         }

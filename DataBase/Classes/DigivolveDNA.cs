@@ -1,3 +1,5 @@
+using System;
+
 namespace DataBase
 {
     public class DigivolveDNA
@@ -8,6 +10,12 @@ namespace DataBase
             DigimonParent2Id = digimonParent2Id;
             DigimonChildId = digimonChildId;
         }
+
+        public Guid Id { get; set; }
+
+
+
+
 
         public string DigimonParent1Id { get; set; }
         public string DigimonParent2Id { get; set; }

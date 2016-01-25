@@ -12,7 +12,7 @@ namespace DataBase
         public Skill(string digimonId, SkillType type, string nameRus, string nameEng, string descriptionRus, 
             string descriptionEng, int mp,decimal ap, SkillSource skillSource = SkillSource.Native)
         {
-           // DigimonId = digimonId;
+            DigimonId = digimonId;
             Type = type;
             NameRus = nameRus;
             NameEng = nameEng;
@@ -23,8 +23,8 @@ namespace DataBase
         }
 
 
-//        [NotMapped]
-//        public string DigimonId { get; set; }
+        [NotMapped]
+        public string DigimonId { get; set; }
 
         public Guid Id { get; set; }
         
