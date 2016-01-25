@@ -11,9 +11,9 @@ namespace DW2DB.ViewModels
         public DigivolveDNAOptionVM(DigivolveDNA source)
         {
             Source = source;
-            Parent1 = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonParent1Id));
-            Parent2 = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonParent2Id));
-            Result = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonChildId));
+//            Parent1 = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonParent1Id));
+//            Parent2 = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonParent2Id));
+//            Result = new DigimonVM(DB.Digimons.FirstOrDefault(x => x.Id == source.DigimonChildId));
         }
 
 

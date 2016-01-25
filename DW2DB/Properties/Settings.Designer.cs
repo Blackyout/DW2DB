@@ -25,7 +25,7 @@ namespace DW2DB.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("en-US")]
+        [global::System.Configuration.DefaultSettingValueAttribute("(Default)")]
         public global::System.Globalization.CultureInfo DefaultLanguage {
             get {
                 return ((global::System.Globalization.CultureInfo)(this["DefaultLanguage"]));

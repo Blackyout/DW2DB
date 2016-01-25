@@ -194,7 +194,7 @@
             </Grid.RowDefinitions>
             <Border Grid.Row="0"  Margin="3" BorderThickness="3" BorderBrush="Blue">
                 <Image Margin="3"  gif:ImageBehavior.RepeatBehavior="Forever"
-               gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.Id,Converter={StaticResource ImagePathConverter}}"/>
+               gif:ImageBehavior.AnimatedSource="{Binding SelectedItem.Source.NameEng,Converter={StaticResource ImagePathConverter}}"/>
             </Border>
             <GroupBox Padding="10" Margin="3" Header="{DynamicResource Location}" Grid.Row="1">
                 <TextBlock Text="{Binding LocationStr}" TextWrapping="WrapWithOverflow"/>

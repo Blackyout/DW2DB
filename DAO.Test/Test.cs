@@ -18,22 +18,17 @@ namespace DAO.Test
         public void EntityTest()
         {
 
-            foreach (var digivolve in DataBase.DB.Digivolves)
-            {
-                var from = DataBase.DB.Digimons.FirstOrDefault(x => x.Id == digivolve.DigimonFromId);
-                var to = DataBase.DB.Digimons.FirstOrDefault(x => x.Id == digivolve.DigimonToId);
-                if (from == null)
-                {
-                    Console.WriteLine(digivolve.DigimonFromId);
-                }
-                if (to == null)
-                {
-                    Console.WriteLine(digivolve.DigimonToId);
-                }
-            }
 
             
         }
+
+        [Fact]
+        public void DAOTest()
+        {
+            //DB.Init();
+            
+        }
+
 
     }
 }
