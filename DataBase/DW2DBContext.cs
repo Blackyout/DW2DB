@@ -11,6 +11,7 @@ namespace DataBase
         public DW2DBContext()
             : base("name=DW2DBContext")
         {
+           
         }
 
 
