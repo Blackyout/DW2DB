@@ -33,12 +33,29 @@ namespace DW2DB
         private string _nameFilter;
 
         private DigimonVM _selectedItem;
+        private decimal _percent;
 
         public AllDigimonsVM()
         {
+            DBLoader.PercentDigimonChanged += PercentChanged;
             NavigateToCmd = new DelegateCommand<DigimonVM>(DoNavigateTo);
 
             AllDigimons = new ObservableCollection<DigimonVM>();
+        }
+
+        public decimal Percent
+        {
+            get { return _percent; }
+            set
+            {
+                _percent = value;
+                OnPropertyChanged(nameof(Percent));
+            }
+        }
+
+        private void PercentChanged()
+        {
+            Percent = DBLoader.PercentLoadDigimons;
         }
 
         public void Load()

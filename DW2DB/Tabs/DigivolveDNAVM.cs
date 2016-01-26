@@ -61,6 +61,7 @@ namespace DW2DB.Tabs
 
         public DigivolveDNAVM()
         {
+            DBLoader.PercentDNAChanged += PercentChanged;
             ClearParent1CMD = new DelegateCommand(ClearParent1);
             ClearParent2CMD = new DelegateCommand(ClearParent2);
             ClearResultCMD = new DelegateCommand(ClearResult);
@@ -68,6 +69,21 @@ namespace DW2DB.Tabs
             AllDigimons = new ObservableCollection<DigimonVM>();
             AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
             //DoLoad();
+        }
+        private decimal _percent;
+        public decimal Percent
+        {
+            get { return _percent; }
+            set
+            {
+                _percent = value;
+                OnPropertyChanged(nameof(Percent));
+            }
+        }
+
+        private void PercentChanged()
+        {
+            Percent = DBLoader.PercentLoadDNA;
         }
 
         public void Load()

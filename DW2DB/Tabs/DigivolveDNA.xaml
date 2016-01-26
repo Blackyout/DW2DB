@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="380"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
 
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -143,9 +144,9 @@
                 </DataGrid.Columns>
             </DataGrid>
         </GroupBox>
-     
-      
-<!--        <Button Command="{Binding LoadCmd}" Grid.Row="4" FontSize="25" Margin="3" Padding="5" Grid.ColumnSpan="4">Загрузить</Button>-->
+        <ProgressBar Grid.Row="5" Grid.ColumnSpan="3" Height="10" Value="{Binding Percent}" Maximum="1"/>
+
+        <!--        <Button Command="{Binding LoadCmd}" Grid.Row="4" FontSize="25" Margin="3" Padding="5" Grid.ColumnSpan="4">Загрузить</Button>-->
 
     </Grid>
 </UserControl>

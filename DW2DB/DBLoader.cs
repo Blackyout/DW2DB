@@ -15,6 +15,7 @@ namespace DW2DB
 {
     public static class DBLoader
     {
+        private static decimal _percentLoadDigimons;
         public static List<DigimonVM> AllDigimons { get; set; }
 
         public static DigimonVM Get(Guid guid)
@@ -40,10 +41,38 @@ namespace DW2DB
                 AllOptions = db.dw2DbContext.DigivolveDnas.GetVMs(AllDigimons);
             }
         }
-        
+
+        public static Action PercentDigimonChanged;
+        public static Action PercentDNAChanged;
+        private static decimal _percentLoadDna;
+
+        public static decimal PercentLoadDigimons   
+        {
+            get { return _percentLoadDigimons; }
+            set
+            {
+                _percentLoadDigimons = value;
+                PercentDigimonChanged?.Invoke();
+            }
+        }
+
+        public static decimal PercentLoadDNA    
+        {
+            get { return _percentLoadDna; }
+            set
+            {
+                _percentLoadDna = value;
+                PercentDNAChanged?.Invoke();
+            }
+        }
+
+
         public static List<DigivolveDNAOptionVM> GetVMs(this IEnumerable<DigivolveDNA> digivolveDnas, List<DigimonVM> allDigimons)
         {
             var result = new List<DigivolveDNAOptionVM>();
+            var count = digivolveDnas.Count();
+            var index = 0;
+
 
             foreach (var digivolveDna in digivolveDnas)
             {
@@ -51,6 +80,8 @@ namespace DW2DB
                 vm.Parents = digivolveDna.Parents.Select(x => Get(x.Parent.Id)).ToList();
                 vm.Result = Get(digivolveDna.Result.Id);
                 result.Add(vm);
+                index++;
+                PercentLoadDNA = ((decimal)index / count);
             }
             return result;
         }
@@ -58,27 +89,31 @@ namespace DW2DB
 
         public static List<DigimonVM> GetVMs(this IEnumerable<Digimon> digimons)
         {
-            var result = digimons.Select(x => x.GetVM()).ToList();
-
-
-            foreach (var digimonVm in result)
+            var result = new List<DigimonVM>();
+            var count = digimons.Count();
+            var index = 0;
+            foreach (var digimon in digimons)
             {
-                digimonVm.DigivolveFrom =
-                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.OrderBy(x=>x.DP).Select(
+                var vm = digimon.GetVM();
+                vm.DigivolveFrom =
+                    new ObservableCollection<DigivolveDigimonVM>(vm.Source.DigivolesFrom.OrderBy(x => x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
                             Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonFrom.Id),
                             DP = x.DP
                         }));
-                digimonVm.DigivolveTo =
-                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesTo.OrderBy(x => x.DP).Select(
+                vm.DigivolveTo =
+                    new ObservableCollection<DigivolveDigimonVM>(vm.Source.DigivolesTo.OrderBy(x => x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
                             Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonTo.Id),
                             DP = x.DP
                         }));
-
+                result.Add(vm);
+                index++;
+                PercentLoadDigimons = ((decimal) index/count);
             }
+
             return result.OrderBy(x=>x.Name).ToList();
 
         }
