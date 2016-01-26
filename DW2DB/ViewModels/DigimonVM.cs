@@ -33,6 +33,14 @@ namespace DW2DB.ViewModels
 
         public ObservableCollection<DigivolveDigimonVM> DigivolveTo { get; set; }
 
+        public string NameFull
+        {
+            get { return $"{Name}({Rank})"; }
+        }
+
+      
+
+
     }
 
     public class DigivolveDigimonVM
@@ -41,6 +49,4 @@ namespace DW2DB.ViewModels
 
         public int DP { get; set; }
     }
-
-
 }

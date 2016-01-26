@@ -53,9 +53,22 @@ namespace DataBase
     public enum SkillSource
     {
         Native = 0,
-        Wild = 1
+        Wild = 1,
+        Wild1 = 2,
+        Wild2 = 3,
+        Wild3 = 4,
+        Wild4 = 5,
+        Wild5 = 6,
+   
+       
     }
-
+//    Сноски:
+//SkillSource.Wild Эта атака встречается только у диких дигимонов.
+//SkillSource.Wild1 Эту атаку можно получить только взломав игру через Gameshark.
+//SkillSource.Wild2 Эта атака встречается только у босса в Патч-домене.
+//SkillSource.Wild3 Эта атака встречается только у босса в Мега-домене.
+//SkillSource.Wild4 Эта атака встречается только у босса в Дата-домене.
+//SkillSource.Wild5 Эта атака встречается только у дикого МеталГреймона в Биос-домене.
 
 
 

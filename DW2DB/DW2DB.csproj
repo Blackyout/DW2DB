@@ -84,6 +84,7 @@
     <Compile Include="ViewModels\DigimonVM.cs" />
     <Compile Include="ViewModels\DigivolveDNAOptionVM.cs" />
     <Compile Include="ViewModels\SkillVM.cs" />
+    <Compile Include="Worker.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

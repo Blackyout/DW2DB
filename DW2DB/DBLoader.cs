@@ -64,14 +64,14 @@ namespace DW2DB
             foreach (var digimonVm in result)
             {
                 digimonVm.DigivolveFrom =
-                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.Select(
+                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.OrderBy(x=>x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
                             Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonFrom.Id),
                             DP = x.DP
                         }));
                 digimonVm.DigivolveTo =
-                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesTo.Select(
+                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesTo.OrderBy(x => x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
                             Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonTo.Id),

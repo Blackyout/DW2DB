@@ -36,7 +36,7 @@
                 <DataTrigger Binding="{Binding Source.Type}" Value="Virus">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="Black"/>
+                            <SolidColorBrush Color="#990088"/>
                         </Setter.Value>
                     </Setter>
                     <Setter Property="Foreground">
@@ -48,59 +48,64 @@
                 <DataTrigger Binding="{Binding Source.Type}" Value="Data">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="Blue"/>
+                            <SolidColorBrush Color="#00eecc"/>
                         </Setter.Value>
                     </Setter>
-                    <Setter Property="Foreground">
-                        <Setter.Value>
-                            <SolidColorBrush Color="White"/>
-                        </Setter.Value>
-                    </Setter>
+<!--                    <Setter Property="Foreground">-->
+<!--                        <Setter.Value>-->
+<!--                            <SolidColorBrush Color="White"/>-->
+<!--                        </Setter.Value>-->
+<!--                    </Setter>-->
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Type}" Value="Vaccine">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="Gold"/>
+                            <SolidColorBrush Color="#ffe700"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
             </Style.Triggers>
         </Style>
-        
+
+<!--        природа -1dd416-->
+<!--вода - 16d4bc-->
+<!--машина- eef000-->
+<!--тьма- 6f4233-->
+<!--огонь- ff4000-->
         <Style x:Key="SpecialityStyle" TargetType="{x:Type TextBlock}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Nature">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="GreenYellow"/>
+                            <SolidColorBrush Color="#1dd416"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Fire">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="IndianRed"/>
+                            <SolidColorBrush Color="#ff4000"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Water">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="DeepSkyBlue"/>
+                            <SolidColorBrush Color="#16d4bc"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Darkness">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="DimGray"/>
+                            <SolidColorBrush Color="#6f4233"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Machine">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="DarkGoldenrod"/>
+                            <SolidColorBrush Color="#e2e338"/>
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
@@ -133,13 +138,14 @@
 
 
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" Grid.Column="0" Margin="3" AutoGenerateColumns="false"
-                  SelectedItem="{Binding SelectedItem}" IsReadOnly="True"
+                  SelectedItem="{Binding SelectedItem}" 
                   myAttachedProperties:SelectingItemAttachedProperty.SelectingItem="{Binding SelectedItem}"
+                  IsReadOnly="True"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                   ItemsSource="{Binding Path=FilteredDigimons}"
-                  CellStyle="{StaticResource CellStyle}"
                   SelectionMode="Single"
+                  CellStyle="{StaticResource CellStyle}"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}">
 
             <DataGrid.Columns>

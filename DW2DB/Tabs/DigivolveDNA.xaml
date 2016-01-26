@@ -32,17 +32,28 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ComboBox ItemsSource="{Binding Digimons}" DisplayMemberPath="Name"
                   IsEditable="True"
                   SelectedItem="{Binding Parent1}"
                   Margin="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
             <Button Command="{Binding ClearParent1CMD}" Grid.Column="1" Margin="3" VerticalAlignment="Center" Width="20" FontWeight="Bold" >X</Button>
+            
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="3" Text="{DynamicResource Level}"/>
+
+            <ComboBox ItemsSource="{Binding Parent1Levels}" Width="50"
+                  IsEditable="True"
+                  SelectedItem="{Binding Parent1Level}"
+                  Margin="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
         </Grid>
 
         <Grid Grid.Row="1" Grid.Column="1" >
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ComboBox ItemsSource="{Binding Digimons}" DisplayMemberPath="Name"
@@ -50,6 +61,13 @@
                   SelectedItem="{Binding Parent2}"
                   Margin="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
             <Button Command="{Binding ClearParent2CMD}" Grid.Column="1" Margin="3" VerticalAlignment="Center" Width="20" FontWeight="Bold" >X</Button>
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="3" Text="{DynamicResource Level}"/>
+
+            <ComboBox ItemsSource="{Binding Parent2Levels}" Width="50"
+                  IsEditable="True"
+                  SelectedItem="{Binding Parent2Level}"
+                  Margin="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+
         </Grid>
 
 
@@ -57,12 +75,22 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <ComboBox ItemsSource="{Binding AllDigimons}" DisplayMemberPath="Name"
                   IsEditable="True"
                   SelectedItem="{Binding Result}"
                   Margin="3" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
             <Button Command="{Binding ClearResultCMD}" Grid.Column="1" Margin="3" VerticalAlignment="Center" Width="20" FontWeight="Bold" >X</Button>
+
+            <TextBlock Grid.Column="2" VerticalAlignment="Center" Margin="3" Text="{DynamicResource MaxLevel}"/>
+
+            <TextBlock Width="50"
+                  Text="{Binding MaxLevel}"
+                  Margin="3" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+
+
         </Grid>
         <Border Grid.Row="3" Grid.Column="0" Margin="3" BorderThickness="3" BorderBrush="Blue">
             <Image  Margin="3" Source="{Binding Parent1.Source.Picture}"/>
@@ -77,11 +105,13 @@
         <GroupBox Margin="3" Header="{DynamicResource Options}"   Grid.Row="4" Grid.ColumnSpan="3">
             <DataGrid  Margin="3,3,3,0" AutoGenerateColumns="false"
                   SelectedItem="{Binding SelectedOption}" 
-                  
+                  IsReadOnly="True"
+                  CanUserAddRows="False" CanUserDeleteRows="False"
+                  CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"  
                               ItemsSource="{Binding Path=FilteredOptions}" Height="266" VerticalAlignment="Top">
                 <DataGrid.Columns>
-                    
-                 <DataGridTextColumn Header="{DynamicResource Parent1}"  Width="2*" Binding="{Binding Path=Parents[0].Name, Mode=TwoWay}">
+
+                    <DataGridTextColumn Header="{DynamicResource Parent1}"  Width="2*" Binding="{Binding Path=Parents[0].NameFull}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -89,8 +119,8 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-    
-                 <DataGridTextColumn Header="{DynamicResource Parent2}"  Width="2*" Binding="{Binding Path=Parents[1].Name, Mode=TwoWay}">
+
+                    <DataGridTextColumn Header="{DynamicResource Parent2}"  Width="2*" Binding="{Binding Path=Parents[1].NameFull}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"
@@ -98,8 +128,8 @@
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                        
-                 <DataGridTextColumn Header="{DynamicResource Result}"  Width="2*" Binding="{Binding Path=Result.Name, Mode=TwoWay}">
+
+                    <DataGridTextColumn Header="{DynamicResource Result}"  Width="2*" Binding="{Binding Path=Result.NameFull}">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment"

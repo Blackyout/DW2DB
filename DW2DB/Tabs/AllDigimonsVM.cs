@@ -38,30 +38,12 @@ namespace DW2DB
         {
             NavigateToCmd = new DelegateCommand<DigimonVM>(DoNavigateTo);
 
+            AllDigimons = new ObservableCollection<DigimonVM>();
+        }
+
+        public void Load()
+        {
             AllDigimons = new ObservableCollection<DigimonVM>(DBLoader.AllDigimons);
-
-
-
-
-//            AllDigimons = new ObservableCollection<DigimonVM>(DataBase.DB.Digimons.Select(x => new DigimonVM()));
-//            foreach (var allDigimon in AllDigimons)
-//            {
-//                //Ищем все скилы и проставляем
-//               // allDigimon.Skills = new ObservableCollection<SkillVM>(
-//               //     DataBase.DB.Skills.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new SkillVM()));
-//                
-//                //Ищем все локации и проставляем
-//                //allDigimon.Locations = new ObservableCollection<LocationVM>(DataBase.DB.Locations.Where(x => x.DigimonId == allDigimon.Source.NameEng).Select(x=>new LocationVM(x)));
-//                //Ищем дигимонов из которых превращается конкретно этот
-//                allDigimon.DigivolveFrom = new ObservableCollection<DigivolveDigimonVM>(
-//                    DataBase.DB.Digivolves.Where(x => x.DigimonToId == allDigimon.Source.NameEng)
-//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),x.DP)));
-//                //Ищем дигимонов в которых превращается конкретно этот
-//                allDigimon.DigivolveTo = new ObservableCollection<DigivolveDigimonVM>(
-//                    DataBase.DB.Digivolves.Where(x => x.DigimonFromId == allDigimon.Source.NameEng)
-//                        .Select(x => new DigivolveDigimonVM(AllDigimons.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),x.DP)));
-//
-//            }
         }
 
         private void DoNavigateTo(DigimonVM obj)
@@ -77,6 +59,7 @@ namespace DW2DB
             {
                 _allDigimons = value;
                 OnPropertyChanged(nameof(AllDigimons));
+                OnPropertyChanged(nameof(FilteredDigimons));
             }
         }
 

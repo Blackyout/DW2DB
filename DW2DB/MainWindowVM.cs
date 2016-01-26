@@ -13,13 +13,29 @@ namespace DW2DB
 {
     public class MainWindowVM : INotifyPropertyChanged
     {
+        IWorker Worker = new AsyncWorker();
+
 
         public MainWindowVM()
         {
-            DBLoader.Load();
             AllDigimonsVM = new AllDigimonsVM();
             DigivolveDNAVM = new DigivolveDNAVM();
+
+            Worker.DoWork(DBLoader.Load, () =>
+            {
+                AllDigimonsVM.Load();
+                DigivolveDNAVM.Load();
+            },OnError);
+
+            
+           
         }
+
+        private void OnError(Exception obj)
+        {
+            throw new NotImplementedException();
+        }
+
 
         public AllDigimonsVM AllDigimonsVM { get; set; }
         public DigivolveDNAVM DigivolveDNAVM { get; set; }

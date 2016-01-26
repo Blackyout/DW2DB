@@ -27,4 +27,7 @@
     <v:String x:Key="Result">Результат</v:String>
     <v:String x:Key="Options">Варианты</v:String>
     <v:String x:Key="AP">Сила атаки</v:String>
+    <v:String x:Key="Level">Уровень:</v:String>
+    <v:String x:Key="MaxLevel">Макс. уровень:</v:String>
+    
 </ResourceDictionary>

@@ -27,4 +27,6 @@
     <v:String x:Key="Result">Result</v:String>
     <v:String x:Key="Options">Options</v:String>
     <v:String x:Key="AP">Attack power</v:String>
+    <v:String x:Key="Level">Level:</v:String>
+    <v:String x:Key="MaxLevel">Max level:</v:String>
 </ResourceDictionary>
