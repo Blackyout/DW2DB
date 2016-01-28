@@ -94,15 +94,15 @@
 
 
         </Grid>
-        <Border Grid.Row="3" Grid.Column="0" Margin="3" BorderThickness="3" BorderBrush="Blue">
+        <Button Command="{Binding DigimonDetailsCmd}" CommandParameter="{Binding Parent1}" Grid.Row="3" Grid.Column="0" Margin="3" BorderThickness="3" BorderBrush="Blue">
             <Image  Margin="3" Source="{Binding Parent1.Source.Picture}"/>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="1" Margin="3" BorderThickness="3" BorderBrush="Blue">
+        </Button>
+        <Button  Command="{Binding DigimonDetailsCmd}" CommandParameter="{Binding Parent2}" Grid.Row="3" Grid.Column="1" Margin="3" BorderThickness="3" BorderBrush="Blue">
             <Image Margin="3" Source="{Binding Parent2.Source.Picture}"/>
-        </Border>
-        <Border Grid.Row="3" Grid.Column="2" Margin="3" BorderThickness="3" BorderBrush="Blue">
+        </Button>
+        <Button  Command="{Binding DigimonDetailsCmd}" CommandParameter="{Binding Result}" Grid.Row="3" Grid.Column="2" Margin="3" BorderThickness="3" BorderBrush="Blue">
             <Image  Margin="3" Source="{Binding Result.Source.Picture}"/>
-        </Border>
+        </Button>
 
         <GroupBox Margin="3" Header="{DynamicResource Options}"   Grid.Row="4" Grid.ColumnSpan="3">
             <DataGrid  Margin="3,3,3,0" AutoGenerateColumns="false"

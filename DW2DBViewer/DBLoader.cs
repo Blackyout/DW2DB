@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using DataBase;
 using DW2DBViewer.ViewModels;
 
@@ -33,6 +34,7 @@ namespace DW2DBViewer
 
         public static void Load()
         {
+            var temp = DateTime.Now;
             using (DB db = new DB())
             {
                 AllDigimons = db.dw2DbContext.Digimons.GetVMs();
@@ -41,7 +43,25 @@ namespace DW2DBViewer
                 DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
 
             }
+            MessageBox.Show("LoadTime = " + (DateTime.Now - temp));
         }
+
+        public static void LoadStatic()
+        {
+            var temp = DateTime.Now;
+            using (DB db = new DB())
+            {
+                AllDigimons = db.dw2DbContext.Digimons.GetVMs();
+                DigimonLoadCompleted?.Invoke(AllDigimons);
+                AllOptions = db.dw2DbContext.DigivolveDnas.GetVMs(AllDigimons);
+                DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
+
+            }
+            MessageBox.Show("LoadTime = " + (DateTime.Now - temp));
+        }
+
+
+
 
         public static Action<decimal> PercentDigimonChanged;
         public static Action<decimal> PercentDNAChanged;

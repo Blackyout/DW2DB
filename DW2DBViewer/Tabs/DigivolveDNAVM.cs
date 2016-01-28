@@ -55,7 +55,7 @@ namespace DW2DBViewer.Tabs
         public ICommand ClearParent1CMD { get; set; }
         public ICommand ClearParent2CMD { get; set; }
         public ICommand ClearResultCMD { get; set; }
-
+        public ICommand DigimonDetailsCmd { get; set; }
         public ICommand LoadCmd { get; set; }
 
         public DigivolveDNAVM()
@@ -65,10 +65,18 @@ namespace DW2DBViewer.Tabs
             ClearParent1CMD = new DelegateCommand(ClearParent1);
             ClearParent2CMD = new DelegateCommand(ClearParent2);
             ClearResultCMD = new DelegateCommand(ClearResult);
+            DigimonDetailsCmd = new DelegateCommand<DigimonVM>(DoDigimonDetails);
             // LoadCmd = new DelegateCommand(DoLoad);
             AllDigimons = new ObservableCollection<DigimonVM>();
             AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
             //DoLoad();
+        }
+
+        public Action<DigimonVM> DigimonClicked;
+
+        private void DoDigimonDetails(DigimonVM obj)
+        {
+            DigimonClicked?.Invoke(obj);
         }
 
         private void LoadCompleted(List<DigimonVM> digimons, List<DigivolveDNAOptionVM> dnas)

@@ -15,10 +15,10 @@
         </DockPanel.DataContext>
         <Menu DockPanel.Dock="Top" Background="{x:Null}">
             <MenuItem x:Name="MenuLanguage" Header="{DynamicResource MenuLanguage}" />
-            <MenuItem Header="{DynamicResource About}" />
+            <MenuItem Header="{DynamicResource About}" Command="{Binding ShowAboutCmd}" />
         </Menu>
         <TabControl>
-            <TabItem Header="{DynamicResource AllDigimons}">
+            <TabItem IsSelected="{Binding AllDigimonsVM.IsSelected}" Header="{DynamicResource AllDigimons}">
                     <local:AllDigimons DataContext="{Binding AllDigimonsVM}"/>
             </TabItem>
             <TabItem Header="{DynamicResource DnaDigivolve}">

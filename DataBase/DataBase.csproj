@@ -69,6 +69,7 @@
     <Compile Include="Classes\Location.cs" />
     <Compile Include="Classes\Skill.cs" />
     <Compile Include="DB.cs" />
+    <Compile Include="DBStatic.cs" />
     <Compile Include="DW2DBContext.cs" />
     <Compile Include="Migrations\201601252028562_init.cs" />
     <Compile Include="Migrations\201601252028562_init.Designer.cs">

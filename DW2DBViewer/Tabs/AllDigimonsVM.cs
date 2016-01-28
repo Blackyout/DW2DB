@@ -34,6 +34,7 @@ namespace DW2DBViewer
         private DigimonVM _selectedItem;
         private decimal _percent;
         private bool _dataLoaded;
+        private bool _isSelected;
 
         public AllDigimonsVM()
         {
@@ -43,6 +44,18 @@ namespace DW2DBViewer
 
             AllDigimons = new ObservableCollection<DigimonVM>();
         }
+
+
+        public bool IsSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged(nameof(IsSelected));
+            }
+        }
+
 
         private void LoadCompleted(List<DigimonVM> digimonVms)
         {
@@ -120,6 +133,12 @@ namespace DW2DBViewer
         protected virtual void OnPropertyChanged( string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void DigimonClicked(DigimonVM obj)
+        {
+            SelectedItem = obj;
+            IsSelected = true;
         }
     }
 }

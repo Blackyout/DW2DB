@@ -8,12 +8,66 @@ using System.Text;
 using System.Threading.Tasks;
 using DataBase;
 using Xunit;
-
+using System.Diagnostics;
 
 namespace DAO.Test
 {
     public class Tests
     {
+        [Fact]
+        public void SpeedTest()
+        {
+            Stopwatch watch1 = new Stopwatch();
+            watch1.Start();
+            DBStatic.Fill();
+            watch1.Stop();
+            Console.WriteLine(watch1.Elapsed);
+        }
+
+
+
+
+
+
+
+        [Fact]
+        public void Main()
+        {
+            string[] z =
+                new string[] {"abc","afsdfasdf","adfasdfasdf"};//воткнуть любой набор строк  };
+            Stopwatch watch1 = new Stopwatch();
+            Stopwatch watch2 = new Stopwatch();
+
+            HashSet<String> str = new HashSet<String>();
+            HashSet<int> dig = new HashSet<int>();
+            foreach (var s in z)
+            {
+                str.Add(s);
+                dig.Add(s.GetHashCode());
+            }
+            int a = 7;
+            watch2.Start();
+            for (int n = 0; n < 10000000; n++)
+                if (dig.Contains(z[0].GetHashCode()))
+                    a--;
+            watch2.Stop();
+            watch1.Start();
+            for (int n = 0; n < 10000000; n++)
+                if (str.Contains(z[0]))
+                    a++;
+            watch1.Stop();
+
+
+            Console.Write(string.Format("str {0} int {1} a {2}", watch1.Elapsed, watch2.Elapsed, a));
+           // Console.ReadKey();
+        }
+
+
+
+
+
+
+
 
         private static byte[] ConvertImageToByteArray(string fileName)
         {
@@ -37,12 +91,14 @@ namespace DAO.Test
             var digimons = DBStatic.Digimons;
 
             var digivolves = DBStatic.Digivolves;
+            var temp = DateTime.Now;
             DBStatic.Fill();
-
+            Console.WriteLine("LoadTime = ", DateTime.Now - temp);
             var digivolvesDna = DBStatic.DigivolvesDNA;
 
             var toDB = digimons;//.Where(x => x.NameEng == "Greymon" || x.NameEng == "Agumon" || x.NameEng == "Betamon");
 
+            //return;
 
             foreach (var digimon in toDB)
             {
