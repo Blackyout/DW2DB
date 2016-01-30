@@ -29,8 +29,8 @@ namespace DW2DBViewer
 
             about.Title = "Digimon World 2 База данных";
             about.Description = "Помогалка в игре DW2";
-            about.Hyperlink =  new Uri("http://www.digimonworld.ru");
-            about.HyperlinkText = "http://www.digimonworld.ru";
+            about.Hyperlink =  new Uri("https://github.com/drdoomenator/DW2DB");
+            about.HyperlinkText = "https://github.com/drdoomenator/DW2DB";
             about.PublisherLogo = null;
             about.Version = "1.0.0";
             about.AdditionalNotes =

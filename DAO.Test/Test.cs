@@ -34,17 +34,56 @@ namespace DAO.Test
         public void Main()
         {
             string[] z =
-                new string[] {"abc","afsdfasdf","adfasdfasdf"};//воткнуть любой набор строк  };
+                new string[] {"asdfasdfasdfbc",
+                    "afsdfsdfsdfasdfasdfaasdf",
+                    "dfsdffsdf",
+                    "adfassdfdfasdf",
+                    "adfasfddfasdf",
+                    "adfassdfaasddffasdf",
+                    "adfassdfdaafasdf",
+                    "adfasfasdfdfsasdf",
+                    "adfasfsdsdfasdf",
+                    "adfassddsfasdf",
+                    "adfassdfasdf",
+                    "adfasfsddfasdf",
+                    "adfasdfsddfdfasdf",
+                    "adfadfasdfasdf",
+                    "adfadfsdfssdfasdf",
+                    "adfasdfasdfssdfasdf",
+                    "adfasdfasdfssdffdfsdfsdasdf",
+                    "adfasdfasdfssdfafasdfsdfsdfassdf",
+                    "adfasdfasdfasdfdsfdfddfasdfssdfasdf",
+                    "dsdfsdfdf",
+                    "adfasddfsfasdfssdfasdf",
+                    "df",
+                    "s",
+                    "adfasdffsasdfssdfasdf",
+                    "as",
+                    "adfasdfdfasdfasdfssdfasdf",
+                    "adfasdfasdfssdfasdf",
+                    "adfasdfsadsfsffasdfssdfasdf",
+                    "adfasddsfsfasdfssdfasdf",
+                    "adfasddsasdfssdfasdf",
+                    "s",
+                    "sdf",
+                };//воткнуть любой набор строк  };
             Stopwatch watch1 = new Stopwatch();
             Stopwatch watch2 = new Stopwatch();
+            Stopwatch watch3 = new Stopwatch();
+            Stopwatch watch4 = new Stopwatch();
 
             HashSet<String> str = new HashSet<String>();
             HashSet<int> dig = new HashSet<int>();
+            List<String> str1 = new List<String>();
+            List<int> dig1 = new List<int>();
             foreach (var s in z)
             {
                 str.Add(s);
+                str1.Add(s);
                 dig.Add(s.GetHashCode());
+                dig1.Add(s.GetHashCode());
             }
+
             int a = 7;
             watch2.Start();
             for (int n = 0; n < 10000000; n++)
@@ -58,7 +97,20 @@ namespace DAO.Test
             watch1.Stop();
 
 
-            Console.Write(string.Format("str {0} int {1} a {2}", watch1.Elapsed, watch2.Elapsed, a));
+            watch3.Start();
+            for (int n = 0; n < 10000000; n++)
+                if (dig1.Contains(z[0].GetHashCode()))
+                    a--;
+            watch3.Stop();
+            watch4.Start();
+            for (int n = 0; n < 10000000; n++)
+                if (str1.Contains(z[0]))
+                    a++;
+            watch4.Stop();
+
+
+            Console.WriteLine(string.Format("str {0} int {1} a {2}", watch1.Elapsed, watch2.Elapsed, a));
+            Console.WriteLine(string.Format("str {0} int {1} a {2}", watch4.Elapsed, watch3.Elapsed, a));
            // Console.ReadKey();
         }
 

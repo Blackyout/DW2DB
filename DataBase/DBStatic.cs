@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DataBase
 {
-    public class DBStatic 
+    public class DBStatic
     {
         public static List<DigivolveDNA> DigivolvesDNA = new List<DigivolveDNA>();
 
@@ -736,51 +737,157 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
 
         public static void Fill()
         {
-            //мутации
-            Dictionary<KeyValuePair<string, string>, string> Mutation = new Dictionary<KeyValuePair<string, string>, string>()
+            //ищем английские имена
+            foreach (var digimon in DigimonTemps)
             {
-                {new KeyValuePair<string, string>("Черримон","Зудомон"),"Вадемон"  },
-                {new KeyValuePair<string, string>("Черримон","МастерТираномон"),"Вадемон"  },
-                {new KeyValuePair<string, string>("Черримон","МеталГреймон"),"Вадемон"  },
-                {new KeyValuePair<string, string>("Черримон","Увамон"),"Вадемон"  },
-
-//                {new KeyValuePair<string, string>("Паппетмон","Зудомон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Паппетмон","МастерТираномон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Паппетмон","МеталГреймон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Паппетмон","Увамон"),"Вадемон"  },
-//
-//
-//                {new KeyValuePair<string, string>("Черримон","БойГреймон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Черримон","МаринеАнгемон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Черримон","Омнимон"),"Вадемон"  },
-//                {new KeyValuePair<string, string>("Черримон","Пречиомон"),"Вадемон"  },
-
-
-
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Грифонмон"),"Янмамон"  },
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Роземон"),"Янмамон"  },
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","Баихумон"),"СэндЯнмамон"  },
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","МеталГарурумон"),"СэндЯнмамон"  },
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","ПринцМамемон"),"СэндЯнмамон"  },
-                {new KeyValuePair<string, string>("ГеркулкесКабутеримон","СаберЛеомон"),"СэндЯнмамон"  },
-            };
-            Dictionary<KeyValuePair<string, string>, string> MutationEng = new Dictionary<KeyValuePair<string, string>, string>();
-
-            foreach (var mutation in Mutation)
+                var firstOrDefault =
+                    DataBase.DBStatic.Digimons.FirstOrDefault(x => x.NameRus.ToLower() == digimon.NameRus.ToLower());
+                if (firstOrDefault != null)
+                {
+                    digimon.NameEng = firstOrDefault.NameEng;
+                    digimon.Digimon = firstOrDefault;
+                }
+                else
+                {
+                    Console.WriteLine(digimon.NameRus);
+                }
+            }
+            
+            foreach (var parent1 in DigimonTempsNotRookie)
             {
-                MutationEng.Add(new KeyValuePair<string, string>(DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Key.Key).NameEng,
-                    DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Key.Value).NameEng),
-                    DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Value).NameEng);
+                foreach (var parent2 in DigimonTempsNotRookie)
+                {
+
+                    var dnaResult = GetChild(parent1.NameEng, parent2.NameEng);
+
+                    if (dnaResult == null) continue;
+                   
+
+                    var first =
+                        DBStatic.DigivolvesDNA.Any(
+                            x => x.DigimonParent1Id == dnaResult.DigimonParent1Id && x.DigimonParent2Id == dnaResult.DigimonParent2Id);
+
+                    var second =
+                        DBStatic.DigivolvesDNA.Any(
+                            x => x.DigimonParent2Id == dnaResult.DigimonParent1Id && x.DigimonParent1Id == dnaResult.DigimonParent2Id);
+                    if (!first && !second)
+                        DBStatic.DigivolvesDNA.Add(dnaResult);
+
+
+                }
             }
 
-            foreach (var mutationEng in MutationEng)
+        }
+
+        private static DigivolveDNA GetChild(string parent1Str, string parent2Str)
+        {
+
+            var parent1 = DigimonTempsNotRookie.FirstOrDefault(x => x.NameEng == parent1Str);
+            var parent2 = DigimonTempsNotRookie.FirstOrDefault(x => x.NameEng == parent2Str);
+
+            var parent11 = parent1;
+            var parent22 = parent2;
+
+
+            if (parent11.Rank != parent22.Rank)
             {
-                DBStatic.DigivolvesDNA.Add(new DigivolveDNA(mutationEng.Key.Key, mutationEng.Key.Value, mutationEng.Value));
+                if (parent11.Rank > parent22.Rank)
+                {
+                    var tmp = parent11;
+                    parent11 = parent22;
+                    parent22 = tmp;
+                }
+
+                do
+                {
+                    parent22 = Down(parent22, DigimonTempsNotRookie);
+                } while (parent11.Rank != parent22.Rank);
+            }
+            Dictionary<string, List<string>> dic;
+            switch (parent11.Rank)
+            {
+                case Rank.Champion:
+                    dic = ChampTableDictionary;
+                    break;
+                case Rank.Ultimate:
+                    dic = UltimaTableDictionary;
+                    break;
+                case Rank.Mega:
+                    dic = MegaTableDictionary;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
 
+            var listDic = dic.ToList();
+            //получили строчку с вариантами
+            var list = dic[parent11.SourceCode];
+            //получаем индекс
+            var index22 = listDic.IndexOf(listDic.FirstOrDefault(x => x.Key == parent22.SourceCode));
+
+            var strResult = list[index22];
 
 
-            var rookie = new List<DigimonTemp>()
+            DigimonTemp result;
+
+            switch (parent11.Rank)
+            {
+                case Rank.Champion:
+                    result = DigimonTemps.FirstOrDefault(x => x.Rank == Rank.Rookie && x.ResultCode == strResult);
+                    break;
+                case Rank.Ultimate:
+                    result = DigimonTemps.FirstOrDefault(x => x.Rank == Rank.Champion && x.ResultCode == strResult);
+                    break;
+                case Rank.Mega:
+                    result = DigimonTemps.FirstOrDefault(x => x.Rank == Rank.Ultimate && x.ResultCode == strResult);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+
+            if (result == null
+                //                        && !DB.DigivolvesDNA.Any(
+                //                            x => x.DigimonParent1Id == parent1.NameEng && x.DigimonParent2Id == parent2.NameEng)
+                //                        && !DB.DigivolvesDNA.Any(
+                //                            x => x.DigimonParent2Id == parent1.NameEng && x.DigimonParent1Id == parent2.NameEng)
+                //&& strResult != "МУ"
+                )
+            {
+                if (strResult == "МУ")
+                {
+                    var mutations = GetMutation();
+
+
+                    if (!mutations.Any(
+                        x => x.DigimonParent1Id == parent1.NameEng && x.DigimonParent2Id == parent2.NameEng)
+                        && !mutations.Any(
+                            x => x.DigimonParent2Id == parent1.NameEng && x.DigimonParent1Id == parent2.NameEng))
+                    {
+                        throw new ApplicationException("В таблице мутаций нет этого сочетания");
+                    }
+                }
+
+                Console.WriteLine(
+                    "Parent1={0}(Rank={4})\tParent2={1}(Rank={5})\tParent11={2}(Rank={6})\tParent22={3}(Rank={7})",
+                    parent1.NameEng, parent2.NameEng, parent11.NameEng, parent22.NameEng,
+                    parent1.Rank, parent2.Rank, parent11.Rank, parent22.Rank);
+
+                return null;
+            }
+
+            var dnaResult = new DigivolveDNA(parent1.NameEng, parent2.NameEng, result.NameEng);
+            return dnaResult;
+        }
+
+        public static new List<DigimonTemp> DigimonTempsNotRookie
+        {
+            get
+            {
+                return DigimonTemps.Where(x => x.Rank != Rank.Rookie).ToList();
+            }
+        }
+
+        public static new List<DigimonTemp> DigimonTemps = new List<DigimonTemp>()
             {
                 new DigimonTemp("Агумон", "", "", "ВА", Rank.Rookie),
                 new DigimonTemp("Виимон", "", "", "ВЖ", Rank.Rookie),
@@ -963,10 +1070,8 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
                 new DigimonTemp("Серафимон", "", "Д", "", Rank.Mega),
                 new DigimonTemp("СкуллМамонтмон", "", "Ц", "", Rank.Mega),
                 new DigimonTemp("Фениксмон", "", "Б", "", Rank.Mega),
-
             };
-
-            Dictionary<string, List<string>> champTableDictionary = new Dictionary<string, List<string>>()
+        public static Dictionary<string, List<string>> ChampTableDictionary = new Dictionary<string, List<string>>()
             {
                 {
                     "А",
@@ -1536,7 +1641,8 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
                     }
                 },
             };
-            Dictionary<string, List<string>> ultimaTableDictionary = new Dictionary<string, List<string>>()
+
+        public static Dictionary<string, List<string>> UltimaTableDictionary = new Dictionary<string, List<string>>()
             {
                 {
                     "А",
@@ -2058,9 +2164,9 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
                         "ВХ"
                     }
                 },
-
             };
-            Dictionary<string, List<string>> megaTableDictionary = new Dictionary<string, List<string>>()
+
+        public static Dictionary<string, List<string>> MegaTableDictionary = new Dictionary<string, List<string>>()
             {
                 {
                     "А",
@@ -2497,136 +2603,52 @@ new Digimon ("Янмамон","Yanmamon",Rank.Champion,Type.Data,Speciality.Natu
             };
 
 
-            var temp = new List<Digimon>();
 
-            //ищем английские имена
-            foreach (var digimon in rookie)
+        private static List<DigivolveDNA> GetMutation()
+        {
+            var tempDna = new List<DigivolveDNA>();
+            Dictionary<KeyValuePair<string, string>, string> Mutation = new Dictionary<KeyValuePair<string, string>, string>()
             {
-                var firstOrDefault =
-                    DataBase.DBStatic.Digimons.FirstOrDefault(x => x.NameRus.ToLower() == digimon.NameRus.ToLower());
-                if (firstOrDefault != null)
-                {
-                    digimon.NameEng = firstOrDefault.NameEng;
-                    digimon.Digimon = firstOrDefault;
-                    temp.Add(firstOrDefault);
-                }
-                else
-                {
-                    Console.WriteLine(digimon.NameRus);
-                }
+                {new KeyValuePair<string, string>("Черримон", "Зудомон"), "Вадемон"},
+                {new KeyValuePair<string, string>("Черримон", "МастерТираномон"), "Вадемон"},
+                {new KeyValuePair<string, string>("Черримон", "МеталГреймон"), "Вадемон"},
+                {new KeyValuePair<string, string>("Черримон", "Увамон"), "Вадемон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "Грифонмон"), "Янмамон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "Роземон"), "Янмамон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "Баихумон"), "СэндЯнмамон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "МеталГарурумон"), "СэндЯнмамон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "ПринцМамемон"), "СэндЯнмамон"},
+                {new KeyValuePair<string, string>("ГеркулкесКабутеримон", "СаберЛеомон"), "СэндЯнмамон"},
+                //хз может неправильно
+                { new KeyValuePair<string, string>("Паппетмон","Зудомон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","МастерТираномон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","МеталГреймон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Паппетмон","Увамон"),"Вадемон"  },
+
+
+                {new KeyValuePair<string, string>("Черримон","БойГреймон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","МаринеАнгемон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","Омнимон"),"Вадемон"  },
+                {new KeyValuePair<string, string>("Черримон","Пречиомон"),"Вадемон"  },
+            };
+            Dictionary<KeyValuePair<string, string>, string> MutationEng =
+                new Dictionary<KeyValuePair<string, string>, string>();
+
+            foreach (var mutation in Mutation)
+            {
+                MutationEng.Add(
+                    new KeyValuePair<string, string>(
+                        DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Key.Key).NameEng,
+                        DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Key.Value).NameEng),
+                    DBStatic.Digimons.FirstOrDefault(x => x.NameRus == mutation.Value).NameEng);
             }
 
-
-
-
-            var errors = new List<string>();
-            //новая колекция без новичков, их скрещивать не надо
-            var notRookee = rookie.Where(x => x.Rank != Rank.Rookie).ToList();
-
-            foreach (var parent1 in notRookee)
+            foreach (var mutationEng in MutationEng)
             {
-                foreach (var parent2 in notRookee)
-                {
-                    var parent11 = parent1;
-                    var parent22 = parent2;
-
-
-                    if (parent11.Rank != parent22.Rank)
-                    {
-                        if (parent11.Rank > parent22.Rank)
-                        {
-                            var tmp = parent11;
-                            parent11 = parent22;
-                            parent22 = tmp;
-                        }
-
-                        do
-                        {
-                            parent22 = Down(parent22, notRookee);
-                        } while (parent11.Rank != parent22.Rank);
-
-                    }
-                    Dictionary<string, List<string>> dic;
-                    switch (parent11.Rank)
-                    {
-                        case Rank.Champion:
-                            dic = champTableDictionary;
-                            break;
-                        case Rank.Ultimate:
-                            dic = ultimaTableDictionary;
-                            break;
-                        case Rank.Mega:
-                            dic = megaTableDictionary;
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    var listDic = dic.ToList();
-                    //получили строчку с вариантами
-                    var list = dic[parent11.SourceCode];
-                    //получаем индекс
-                    var index22 = listDic.IndexOf(listDic.FirstOrDefault(x => x.Key == parent22.SourceCode));
-
-                    var strResult = list[index22];
-
-
-                    DigimonTemp result;
-
-                    switch (parent11.Rank)
-                    {
-                        case Rank.Champion:
-                            result = rookie.FirstOrDefault(x => x.Rank == Rank.Rookie && x.ResultCode == strResult);
-                            break;
-                        case Rank.Ultimate:
-                            result = rookie.FirstOrDefault(x => x.Rank == Rank.Champion && x.ResultCode == strResult);
-                            break;
-                        case Rank.Mega:
-                            result = rookie.FirstOrDefault(x => x.Rank == Rank.Ultimate && x.ResultCode == strResult);
-                            break;
-                        default:
-                            throw new ArgumentOutOfRangeException();
-                    }
-
-                    if (result == null
-                            //                        && !DB.DigivolvesDNA.Any(
-                            //                            x => x.DigimonParent1Id == parent1.NameEng && x.DigimonParent2Id == parent2.NameEng)
-                            //                        && !DB.DigivolvesDNA.Any(
-                            //                            x => x.DigimonParent2Id == parent1.NameEng && x.DigimonParent1Id == parent2.NameEng)
-                            //&& strResult != "МУ"
-                            )
-                    {
-                        errors.Add(parent11.NameEng + "-" + parent11.NameRus + "-" + parent11.Rank);
-                        errors.Add(parent22.NameEng + "-" + parent22.NameRus + "-" + parent22.Rank);
-
-                        Console.WriteLine("Parent1={0}(Rank={4})\tParent2={1}(Rank={5})\tParent11={2}(Rank={6})\tParent22={3}(Rank={7})",
-                            parent1.NameEng, parent2.NameEng, parent11.NameEng, parent22.NameEng,
-                            parent1.Rank, parent2.Rank, parent11.Rank, parent22.Rank);
-
-                        continue;
-                    }
-
-                    var first =
-                        DBStatic.DigivolvesDNA.Any(
-                            x => x.DigimonParent1Id == parent1.NameEng && x.DigimonParent2Id == parent2.NameEng);
-
-                    var second =
-                        DBStatic.DigivolvesDNA.Any(
-                            x => x.DigimonParent2Id == parent1.NameEng && x.DigimonParent1Id == parent2.NameEng);
-                    if (!first && !second)
-                        DBStatic.DigivolvesDNA.Add(new DigivolveDNA(parent1.NameEng, parent2.NameEng, result.NameEng));
-
-
-                }
+                tempDna.Add(new DigivolveDNA(mutationEng.Key.Key, mutationEng.Key.Value, mutationEng.Value));
             }
 
-            foreach (var error in errors.GroupBy(x => x).OrderByDescending(x => x.Count()))
-            {
-                Console.WriteLine("{0}-{1}", error.Key, error.Count());
-            }
-
-
-
+            return tempDna;
         }
 
 
