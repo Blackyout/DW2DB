@@ -65,7 +65,7 @@ namespace DW2DBViewer.Tabs
             ClearParent1CMD = new DelegateCommand(ClearParent1);
             ClearParent2CMD = new DelegateCommand(ClearParent2);
             ClearResultCMD = new DelegateCommand(ClearResult);
-            DigimonDetailsCmd = new DelegateCommand<DigimonVM>(DoDigimonDetails);
+            DigimonDetailsCmd = new DelegateCommand<DigimonVM>(DoDigimonDetails, x => x != null);
             // LoadCmd = new DelegateCommand(DoLoad);
             AllDigimons = new ObservableCollection<DigimonVM>();
             AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
@@ -81,7 +81,8 @@ namespace DW2DBViewer.Tabs
 
         private void LoadCompleted(List<DigimonVM> digimons, List<DigivolveDNAOptionVM> dnas)
         {
-            AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(dnas);
+            //AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(dnas);
+            AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
 
             AllDigimons = new ObservableCollection<DigimonVM>(digimons);
 
@@ -117,7 +118,7 @@ namespace DW2DBViewer.Tabs
             Percent = percent;
         }
 
-     
+
         private void ClearResult()
         {
             Result = null;
@@ -178,7 +179,7 @@ namespace DW2DBViewer.Tabs
 
         public int MaxLevel
         {
-            get { return Parent1Level + Parent2Level/5; }
+            get { return Parent1Level + Parent2Level / 5; }
         }
 
 
@@ -211,19 +212,30 @@ namespace DW2DBViewer.Tabs
 
         private void SetResult()
         {
-            if (Parent1 != null && Parent2 != null && AllOptions.Any())
+            if (Parent1 != null && Parent2 != null)
             {
-                var temp = AllOptions.FirstOrDefault(x => (Parent1 != Parent2 && x.Parents.Contains(Parent1) && x.Parents.Contains(Parent2))
-                || (Parent1 == Parent2 &&  x.Parents.All(y => y == Parent1)));
-                if (temp != null)
-                    _result = temp.Result;
-                else
-                    _result = null;
+                var dna = DBStatic.GetChild(Parent1.Source.NameEng, Parent2.Source.NameEng);
+                if (dna != null)
+                {
+                    _result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == dna.DigimonChildId);
+                }
             }
-            else
-            {
-                _result = null;
-            }
+
+
+
+            //            if (Parent1 != null && Parent2 != null && AllOptions.Any())
+            //            {
+            //                var temp = AllOptions.FirstOrDefault(x => (Parent1 != Parent2 && x.Parents.Contains(Parent1) && x.Parents.Contains(Parent2))
+            //                || (Parent1 == Parent2 &&  x.Parents.All(y => y == Parent1)));
+            //                if (temp != null)
+            //                    _result = temp.Result;
+            //                else
+            //                    _result = null;
+            //            }
+            //            else
+            //            {
+            //                _result = null;
+            //            }
         }
 
 

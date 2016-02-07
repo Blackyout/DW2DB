@@ -17,13 +17,6 @@ namespace DW2DBViewer
         private static decimal _percentLoadDigimons;
         public static List<DigimonVM> AllDigimons { get; set; }
 
-        public static DigimonVM Get(Guid guid)
-        {
-            return AllDigimons.FirstOrDefault(x => x.Source.Id == guid);
-        }
-
-
-
         public static List<DigivolveDNAOptionVM> AllOptions { get; set; }
 
         public static List<DigimonVM> NoRookie
@@ -31,64 +24,22 @@ namespace DW2DBViewer
             get { return AllDigimons.Where(x => x.Source.Rank != Rank.Rookie).ToList(); }
         }
 
-
-        public static void Load()
-        {
-            var temp = DateTime.Now;
-            using (DB db = new DB())
-            {
-                AllDigimons = db.dw2DbContext.Digimons.GetVMs();
-                DigimonLoadCompleted?.Invoke(AllDigimons);
-                AllOptions = db.dw2DbContext.DigivolveDnas.GetVMs(AllDigimons);
-                DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
-
-            }
-            MessageBox.Show("LoadTime = " + (DateTime.Now - temp));
-        }
-
         public static void LoadStatic()
         {
-            var temp = DateTime.Now;
-            using (DB db = new DB())
-            {
-                AllDigimons = db.dw2DbContext.Digimons.GetVMs();
-                DigimonLoadCompleted?.Invoke(AllDigimons);
-                AllOptions = db.dw2DbContext.DigivolveDnas.GetVMs(AllDigimons);
-                DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
 
-            }
-            MessageBox.Show("LoadTime = " + (DateTime.Now - temp));
+            DBStatic.FillStaticBase();
+            AllDigimons = DBStatic.Digimons.GetVMs();
+            DigimonLoadCompleted?.Invoke(AllDigimons);
+            DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
         }
-
-
-
-
+        
         public static Action<decimal> PercentDigimonChanged;
         public static Action<decimal> PercentDNAChanged;
         public static Action<List<DigimonVM>> DigimonLoadCompleted;
-        public static Action<List<DigimonVM>,List<DigivolveDNAOptionVM>> DNALoadCompleted;
+        public static Action<List<DigimonVM>, List<DigivolveDNAOptionVM>> DNALoadCompleted;
         private static decimal _percentLoadDna;
 
-        public static List<DigivolveDNAOptionVM> GetVMs(this IEnumerable<DigivolveDNA> digivolveDnas, List<DigimonVM> allDigimons)
-        {
-            var result = new List<DigivolveDNAOptionVM>();
-            var count = digivolveDnas.Count();
-            var index = 0;
-
-
-            foreach (var digivolveDna in digivolveDnas)
-            {
-                var vm = new DigivolveDNAOptionVM();
-                vm.Parents = digivolveDna.Parents.Select(x => Get(x.Parent.Id)).ToList();
-                vm.Result = Get(digivolveDna.Result.Id);
-                result.Add(vm);
-                index++;
-                PercentDNAChanged?.Invoke(((decimal)index / count));
-            }
-            return result;
-        }
-
-
+     
         public static List<DigimonVM> GetVMs(this IEnumerable<Digimon> digimons)
         {
             var result = new List<DigimonVM>();
@@ -98,30 +49,30 @@ namespace DW2DBViewer
             foreach (var digimon in digimons)
             {
                 result.Add(digimon.GetVM());
-                
+
             }
-            
+
             foreach (var digimonVm in result)
             {
                 digimonVm.DigivolveFrom =
                     new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.OrderBy(x => x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
-                            Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonFrom.Id),
+                            Digimon = result.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),
                             DP = x.DP
                         }));
                 digimonVm.DigivolveTo =
                     new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesTo.OrderBy(x => x.DP).Select(
                         x => new DigivolveDigimonVM()
                         {
-                            Digimon = result.FirstOrDefault(y => y.Source.Id == x.DigimonTo.Id),
+                            Digimon = result.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),
                             DP = x.DP
                         }));
                 index++;
                 PercentDigimonChanged?.Invoke(((decimal)index / count));
             }
 
-            return result.OrderBy(x=>x.Name).ToList();
+            return result.OrderBy(x => x.Name).ToList();
 
         }
 
@@ -160,12 +111,16 @@ namespace DW2DBViewer
                 {
                     case "ru-RU":
                         skillVm.Name = skill.NameRus;
-                        skillVm.Description = skill.DescriptionRus;
+                        skillVm.Description = skill.SkillSource != SkillSource.Native
+                            ? $"{skill.DescriptionRus} ({ClassHelper.SkillSourceRus[skill.SkillSource]})"
+                            : skill.DescriptionRus;
                         skillVm.Type = ClassHelper.SkillTypeRus[skill.Type];
                         break;
                     default:
                         skillVm.Name = skill.NameEng;
-                        skillVm.Description = skill.DescriptionEng;
+                        skillVm.Description = skill.SkillSource != SkillSource.Native
+                            ? $"{skill.DescriptionEng} ({ClassHelper.SkillSourceEng[skill.SkillSource]})"
+                            : skill.DescriptionEng;
                         skillVm.Type = ClassHelper.SkillTypeEng[skill.Type];
                         break;
                 }
@@ -184,17 +139,17 @@ namespace DW2DBViewer
                 {
                     case "ru-RU":
                         locations.Add(location.Domain != null
-                            ? location.Domain.NameRus + " " + String.Join(",", location.Floors)
+                            ? location.Domain.NameRus + " Эт.:" + String.Join(",", location.Floors)
                             : location.DescriptionRus);
                         break;
                     default:
                         locations.Add(location.Domain != null
-                            ? location.Domain.NameEng + " " + String.Join(",", location.Floors)
+                            ? location.Domain.NameEng + " Lvl:" + String.Join(",", location.Floors)
                             : location.DescriptionEng);
                         break;
                 }
             }
-            vm.LocationStr = string.Join("; ", locations);
+            vm.LocationStr = string.Join(" || ", locations);
 
             return vm;
         }

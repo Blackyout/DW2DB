@@ -75,6 +75,27 @@ namespace DataBase
             {SkillType.Interrupt,"Interrupt"},
             {SkillType.Assist,"Assist"},
         };
+
+        public static Dictionary<SkillSource,string> SkillSourceRus = new Dictionary<SkillSource, string>()
+        {
+            {SkillSource.Wild, "Эта атака встречается только у диких дигимонов." },
+            {SkillSource.Wild1, "Эту атаку можно получить только взломав игру через Gameshark." },
+            {SkillSource.Wild2, "Эта атака встречается только у босса в Патч-домене." },
+            {SkillSource.Wild3, "Эта атака встречается только у босса в Мега-домене." },
+            {SkillSource.Wild4, "Эта атака встречается только у босса в Дата-домене." },
+            {SkillSource.Wild5, "Эта атака встречается только у дикого МеталГреймона в Биос-домене." },
+        };
+
+
+        public static Dictionary<SkillSource, string> SkillSourceEng = new Dictionary<SkillSource, string>()
+        {
+            {SkillSource.Wild,  "Only wild digimon have this move." },
+            {SkillSource.Wild1, "You can unlock this move only using Gameshark." },
+            {SkillSource.Wild2, "Only Patch Domain boss have this move." },
+            {SkillSource.Wild3, "Only Mega Domain boss have this move." },
+            {SkillSource.Wild4, "Only Data Domain boss have this move." },
+            {SkillSource.Wild5, "Only wild MetalGreymon in a Patch Domain have this move." },
+        };
     }
 
 }

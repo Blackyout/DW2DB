@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase
 {
@@ -10,31 +8,14 @@ namespace DataBase
     /// </summary>
     public class Digimon
     {
-        public Digimon()
-        {
-            Id = Guid.NewGuid(); 
-        }
-
-
-        public Digimon(string nameRus, string nameEng, Rank rank)
-        {
-            Id = Guid.NewGuid();
-            NameEng = nameEng;
-            NameRus = nameRus;
-            Rank = rank;
-        }
-
         public Digimon(string nameRus, string nameEng, Rank rank, Type type, Speciality speciality)
         {
-            Id = Guid.NewGuid();
             NameEng = nameEng;
             NameRus = nameRus;
             Rank = rank;
             Type = type;
             Speciality = speciality;
         }
-
-        public Guid Id { get; set; }
 
         /// <summary>
         /// Наименование на английском
@@ -68,9 +49,6 @@ namespace DataBase
         public virtual List<Digivolve> DigivolesTo { get; set; }
 
         public virtual List<DigivolveDNA> DigivolveDnas { get; set; }
-        [MaxLength]
-        public virtual byte[] Picture { get; set; }
-
 
     }
 

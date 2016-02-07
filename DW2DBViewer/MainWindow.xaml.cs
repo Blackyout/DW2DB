@@ -34,14 +34,25 @@ namespace DW2DBViewer
 
         private void LanguageChanged(Object sender, EventArgs e)
         {
+            var needRestart = false;
             CultureInfo currLang = App.Language;
 
             //Отмечаем нужный пункт смены языка как выбранный язык
             foreach (MenuItem i in MenuLanguage.Items)
             {
                 CultureInfo ci = i.Tag as CultureInfo;
+
+                needRestart = i.IsChecked != (ci != null && ci.Equals(currLang));
+
                 i.IsChecked = ci != null && ci.Equals(currLang);
             }
+
+            if (needRestart)
+            {
+                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Application.Current.Shutdown();
+            }
+
         }
 
         private void ChangeLanguageClick(Object sender, EventArgs e)

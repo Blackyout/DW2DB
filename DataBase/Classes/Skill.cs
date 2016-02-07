@@ -1,19 +1,12 @@
 using System;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataBase
 {
     public class Skill
-    {
-        public Skill()
-        {
-            Id = Guid.NewGuid();
-        }
-        
+    {   
         public Skill(string digimonId, SkillType type, string nameRus, string nameEng, string descriptionRus, 
             string descriptionEng, int mp,decimal ap, SkillSource skillSource = SkillSource.Native)
         {
-            Id = Guid.NewGuid();
             DigimonId = digimonId;
             Type = type;
             NameRus = nameRus;
@@ -22,14 +15,13 @@ namespace DataBase
             DescriptionEng = descriptionEng;
             MP = mp;
             AP = ap;
+            SkillSource = skillSource;
         }
 
-
-        [NotMapped]
+        public SkillSource SkillSource { get; set; }
+        
         public string DigimonId { get; set; }
 
-        public Guid Id { get; set; }
-        
         public virtual Digimon Digimon { get; set; }
 
         public SkillType Type { get; set; }
@@ -46,8 +38,6 @@ namespace DataBase
 
         public decimal AP { get; set; }
 
-       
-
     }
 
     public enum SkillSource
@@ -62,24 +52,6 @@ namespace DataBase
    
        
     }
-    //    Сноски:
-    //SkillSource.Wild Эта атака встречается только у диких дигимонов.
-    //SkillSource.Wild1 Эту атаку можно получить только взломав игру через Gameshark.
-    //SkillSource.Wild2 Эта атака встречается только у босса в Патч-домене.
-    //SkillSource.Wild3 Эта атака встречается только у босса в Мега-домене.
-    //SkillSource.Wild4 Эта атака встречается только у босса в Дата-домене.
-    //SkillSource.Wild5 Эта атака встречается только у дикого МеталГреймона в Биос-домене.
-
-
-
-//    SkillSource.Wild Only wild digimon have this move.
-//    SkillSource.Wild1 You can unlock this move only using Gameshark.
-//SkillSource.Wild2 Only Patch Domain boss have this move.
-//SkillSource.Wild3 Only Mega Domain boss have this move.
-//SkillSource.Wild4 Only Data Domain boss have this move.
-//SkillSource.Wild5 Only wild MetalGreymon in a Patch Domain have this move.
-
-
 
     public enum SkillType
     {

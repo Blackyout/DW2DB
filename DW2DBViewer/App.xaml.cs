@@ -85,34 +85,16 @@ namespace DW2DBViewer
 
                 //4. Вызываем евент для оповещения всех окон.
                 LanguageChanged(Application.Current, new EventArgs());
+
+
+               
+
             }
         }
 
         public void Application_LoadCompleted(object sender, StartupEventArgs startupEventArgs)
         {
             Language = DW2DBViewer.Properties.Settings.Default.DefaultLanguage;
-
-
-//            try
-//            {
-//                DBLoader.Load();
-//            }
-//            catch (Exception e)
-//            {
-//                MessageBox.Show(e.ToString());
-//
-//            }
-
-
-             
-                Worker.DoWork(DBLoader.Load, () =>
-                {
-                }, OnError);
-    
-
-         
-
-
         }
 
         private void OnError(Exception obj)
@@ -122,7 +104,6 @@ namespace DW2DBViewer
 
         private void App_LanguageChanged(Object sender, EventArgs e)
         {
-//            DW2DBViewer.
             DW2DBViewer.Properties.Settings.Default.DefaultLanguage = Language;
             DW2DBViewer.Properties.Settings.Default.Save();
         }
@@ -130,5 +111,19 @@ namespace DW2DBViewer
         
     }
 
-  
+    [ValueConversion(typeof(string), typeof(string))]
+    public class ImagePathConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return $"pack://application:,,,/PicDB;component/Pics/{value}.jpg";
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return null;
+        }
+    }
+
+
 }
