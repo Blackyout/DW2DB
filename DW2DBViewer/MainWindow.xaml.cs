@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -7,7 +8,7 @@ using System.Windows.Data;
 namespace DW2DBViewer
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
@@ -17,13 +18,13 @@ namespace DW2DBViewer
 
             App.LanguageChanged += LanguageChanged;
 
-            CultureInfo currLang = App.Language;
+            var currLang = App.Language;
 
             //Заполняем меню смены языка:
             MenuLanguage.Items.Clear();
             foreach (var lang in App.Languages)
             {
-                MenuItem menuLang = new MenuItem();
+                var menuLang = new MenuItem();
                 menuLang.Header = lang.DisplayName;
                 menuLang.Tag = lang;
                 menuLang.IsChecked = lang.Equals(currLang);
@@ -32,15 +33,15 @@ namespace DW2DBViewer
             }
         }
 
-        private void LanguageChanged(Object sender, EventArgs e)
+        private void LanguageChanged(object sender, EventArgs e)
         {
             var needRestart = false;
-            CultureInfo currLang = App.Language;
+            var currLang = App.Language;
 
             //Отмечаем нужный пункт смены языка как выбранный язык
             foreach (MenuItem i in MenuLanguage.Items)
             {
-                CultureInfo ci = i.Tag as CultureInfo;
+                var ci = i.Tag as CultureInfo;
 
                 needRestart = i.IsChecked != (ci != null && ci.Equals(currLang));
 
@@ -49,41 +50,39 @@ namespace DW2DBViewer
 
             if (needRestart)
             {
-                System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+                Process.Start(Application.ResourceAssembly.Location);
                 Application.Current.Shutdown();
             }
-
         }
 
-        private void ChangeLanguageClick(Object sender, EventArgs e)
+        private void ChangeLanguageClick(object sender, EventArgs e)
         {
-            MenuItem mi = sender as MenuItem;
+            var mi = sender as MenuItem;
             if (mi != null)
             {
-                CultureInfo lang = mi.Tag as CultureInfo;
+                var lang = mi.Tag as CultureInfo;
                 if (lang != null)
                 {
                     App.Language = lang;
                 }
             }
-
         }
     }
 
     /// <summary>
-    /// Конвертер булевого значения в невидимость
+    ///     Конвертер булевого значения в невидимость
     /// </summary>
-    [ValueConversion(typeof(bool), typeof(Visibility))]
+    [ValueConversion(typeof (bool), typeof (Visibility))]
     public class InvisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool)value ? Visibility.Collapsed : Visibility.Visible;
+            return (bool) value ? Visibility.Collapsed : Visibility.Visible;
         }
+
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return 0;
         }
     }
-
 }

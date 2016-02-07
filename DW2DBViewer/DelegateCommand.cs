@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace DW2DBViewer
@@ -78,10 +75,7 @@ namespace DW2DBViewer
         /// </summary>
         public bool IsAutomaticRequeryDisabled
         {
-            get
-            {
-                return _isAutomaticRequeryDisabled;
-            }
+            get { return _isAutomaticRequeryDisabled; }
             set
             {
                 if (_isAutomaticRequeryDisabled != value)
@@ -252,10 +246,7 @@ namespace DW2DBViewer
         /// </summary>
         public bool IsAutomaticRequeryDisabled
         {
-            get
-            {
-                return _isAutomaticRequeryDisabled;
-            }
+            get { return _isAutomaticRequeryDisabled; }
             set
             {
                 if (_isAutomaticRequeryDisabled != value)
@@ -306,16 +297,16 @@ namespace DW2DBViewer
             // set yet, then return false if CanExecute delegate
             // exists, else return true
             if (parameter == null &&
-                typeof(T).IsValueType)
+                typeof (T).IsValueType)
             {
-                return (_canExecuteMethod == null);
+                return _canExecuteMethod == null;
             }
-            return CanExecute((T)parameter);
+            return CanExecute((T) parameter);
         }
 
         void ICommand.Execute(object parameter)
         {
-            Execute((T)parameter);
+            Execute((T) parameter);
         }
 
         #endregion
@@ -344,11 +335,11 @@ namespace DW2DBViewer
                 // could cause the array to me modified while we are reading it.
 
                 var callees = new EventHandler[handlers.Count];
-                int count = 0;
+                var count = 0;
 
-                for (int i = handlers.Count - 1; i >= 0; i--)
+                for (var i = handlers.Count - 1; i >= 0; i--)
                 {
-                    WeakReference reference = handlers[i];
+                    var reference = handlers[i];
                     var handler = reference.Target as EventHandler;
                     if (handler == null)
                     {
@@ -363,9 +354,9 @@ namespace DW2DBViewer
                 }
 
                 // Call the handlers that we snapshotted
-                for (int i = 0; i < count; i++)
+                for (var i = 0; i < count; i++)
                 {
-                    EventHandler handler = callees[i];
+                    var handler = callees[i];
                     handler(null, EventArgs.Empty);
                 }
             }
@@ -375,7 +366,7 @@ namespace DW2DBViewer
         {
             if (handlers != null)
             {
-                foreach (WeakReference handlerRef in handlers)
+                foreach (var handlerRef in handlers)
                 {
                     var handler = handlerRef.Target as EventHandler;
                     if (handler != null)
@@ -390,7 +381,7 @@ namespace DW2DBViewer
         {
             if (handlers != null)
             {
-                foreach (WeakReference handlerRef in handlers)
+                foreach (var handlerRef in handlers)
                 {
                     var handler = handlerRef.Target as EventHandler;
                     if (handler != null)
@@ -406,11 +397,12 @@ namespace DW2DBViewer
             AddWeakReferenceHandler(ref handlers, handler, -1);
         }
 
-        internal static void AddWeakReferenceHandler(ref List<WeakReference> handlers, EventHandler handler, int defaultListSize)
+        internal static void AddWeakReferenceHandler(ref List<WeakReference> handlers, EventHandler handler,
+            int defaultListSize)
         {
             if (handlers == null)
             {
-                handlers = (defaultListSize > 0 ? new List<WeakReference>(defaultListSize) : new List<WeakReference>());
+                handlers = defaultListSize > 0 ? new List<WeakReference>(defaultListSize) : new List<WeakReference>();
             }
 
             handlers.Add(new WeakReference(handler));
@@ -420,7 +412,7 @@ namespace DW2DBViewer
         {
             if (handlers != null)
             {
-                for (int i = handlers.Count - 1; i >= 0; i--)
+                for (var i = handlers.Count - 1; i >= 0; i--)
                 {
                     var reference = handlers[i];
                     var existingHandler = reference.Target as EventHandler;
@@ -434,6 +426,4 @@ namespace DW2DBViewer
             }
         }
     }
-
-
 }

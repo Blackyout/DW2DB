@@ -43,7 +43,7 @@ namespace DW2DBViewer
                     if (e.Error == null)
                         try
                         {
-                            OnCompleted((TResult)e.Result);
+                            OnCompleted((TResult) e.Result);
                         }
                         catch (Exception err)
                         {
@@ -71,11 +71,13 @@ namespace DW2DBViewer
         public static void DoWork(this IWorker worker, Action doWork, Action onOk, Action<Exception> onError)
         {
             worker.Do(
-                () => { doWork(); return true; },
+                () =>
+                {
+                    doWork();
+                    return true;
+                },
                 fake => onOk(),
                 onError);
         }
-
     }
-    
 }

@@ -12,7 +12,7 @@
         d:DataContext="{d:DesignInstance local:MainWindowVM }">
     <DockPanel>
         <DockPanel.DataContext>
-            <local:MainWindowVM/>
+            <local:MainWindowVM />
         </DockPanel.DataContext>
         <Menu DockPanel.Dock="Top" Background="{x:Null}">
             <MenuItem x:Name="MenuLanguage" Header="{DynamicResource MenuLanguage}" />
@@ -20,12 +20,12 @@
         </Menu>
         <TabControl>
             <TabItem IsSelected="{Binding AllDigimonsVM.IsSelected}" Header="{DynamicResource AllDigimons}">
-                    <local:AllDigimons DataContext="{Binding AllDigimonsVM}"/>
+                <local:AllDigimons DataContext="{Binding AllDigimonsVM}" />
             </TabItem>
             <TabItem Header="{DynamicResource DnaDigivolve}">
-                <tabs:DigivolveDNA DataContext="{Binding DigivolveDNAVM}"/>
+                <tabs:DigivolveDNA DataContext="{Binding DigivolveDNAVM}" />
             </TabItem>
         </TabControl>
-      
+
     </DockPanel>
 </Window>

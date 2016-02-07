@@ -57,13 +57,11 @@
     <Compile Include="Classes\Location.cs" />
     <Compile Include="Classes\Skill.cs" />
     <Compile Include="DBStatic.cs" />
+    <Compile Include="DNATables.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.Collections.ObjectModel;
 using DataBase;
 
 namespace DW2DBViewer.ViewModels
@@ -35,10 +27,6 @@ namespace DW2DBViewer.ViewModels
         {
             get { return $"{Name}({Rank})"; }
         }
-
-      
-
-
     }
 
     public class DigivolveDigimonVM

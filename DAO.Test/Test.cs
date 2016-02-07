@@ -19,15 +19,12 @@ namespace DAO.Test
         {
             Stopwatch watch1 = new Stopwatch();
             watch1.Start();
-            DBStatic.Fill();
+            DNATables.CalculateAllDNAOptions();
             watch1.Stop();
             Console.WriteLine(watch1.Elapsed);
         }
 
-
-
-
-
+        
 
 
         [Fact]
@@ -113,30 +110,6 @@ namespace DAO.Test
             Console.WriteLine(string.Format("str {0} int {1} a {2}", watch4.Elapsed, watch3.Elapsed, a));
            // Console.ReadKey();
         }
-
-
-
-
-
-
-
-
-        private static byte[] ConvertImageToByteArray(string fileName)
-        {
-            Bitmap bitMap = new Bitmap(fileName);
-            ImageFormat bmpFormat = bitMap.RawFormat;
-            var imageToConvert = Image.FromFile(fileName);
-            using (MemoryStream ms = new MemoryStream())
-            {
-                imageToConvert.Save(ms, bmpFormat);
-                return ms.ToArray();
-            }
-        }
-
-
-
-     
-
 
     }
 }

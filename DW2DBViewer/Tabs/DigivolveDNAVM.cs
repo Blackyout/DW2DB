@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using DataBase;
 using DW2DBViewer.ViewModels;
@@ -13,50 +11,24 @@ namespace DW2DBViewer.Tabs
 {
     public class DigivolveDNAVM : INotifyPropertyChanged
     {
-        public List<int> Levels(Rank rank)
-        {
-            int min = 0;
-            switch (rank)
-            {
-                case Rank.Champion:
-                    min = 11;
-                    break;
-                case Rank.Ultimate:
-                    min = 21;
-                    break;
-                case Rank.Mega:
-                    min = 31;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(rank), rank, null);
-            }
+        private ObservableCollection<DigimonVM> _allDigimons;
 
-            var result = new List<int>();
-            for (int i = min; i < 100; i++)
-            {
-                result.Add(i);
-            }
-            return result;
-        }
+        private bool _dataLoaded;
 
 
         private ObservableCollection<DigimonVM> _digimons;
         private DigimonVM _parent1;
-        private DigimonVM _parent2;
-        private DigimonVM _result;
-        private ObservableCollection<DigimonVM> _allDigimons;
-        private DigivolveDNAOptionVM _selectedOption;
         private int _parent1Level;
-        private int _parent2Level;
         private List<int> _parent1Levels;
+        private DigimonVM _parent2;
+        private int _parent2Level;
         private List<int> _parent2Levels;
 
+        private decimal _percent;
+        private DigimonVM _result;
+        private DigivolveDNAOptionVM _selectedOption;
 
-        public ICommand ClearParent1CMD { get; set; }
-        public ICommand ClearParent2CMD { get; set; }
-        public ICommand ClearResultCMD { get; set; }
-        public ICommand DigimonDetailsCmd { get; set; }
-        public ICommand LoadCmd { get; set; }
+        public Action<DigimonVM> DigimonClicked;
 
         public DigivolveDNAVM()
         {
@@ -72,26 +44,13 @@ namespace DW2DBViewer.Tabs
             //DoLoad();
         }
 
-        public Action<DigimonVM> DigimonClicked;
 
-        private void DoDigimonDetails(DigimonVM obj)
-        {
-            DigimonClicked?.Invoke(obj);
-        }
+        public ICommand ClearParent1CMD { get; set; }
+        public ICommand ClearParent2CMD { get; set; }
+        public ICommand ClearResultCMD { get; set; }
+        public ICommand DigimonDetailsCmd { get; set; }
+        public ICommand LoadCmd { get; set; }
 
-        private void LoadCompleted(List<DigimonVM> digimons, List<DigivolveDNAOptionVM> dnas)
-        {
-            //AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(dnas);
-            AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
-
-            AllDigimons = new ObservableCollection<DigimonVM>(digimons);
-
-            //отсеиваем новичков
-            Digimons = new ObservableCollection<DigimonVM>(digimons.Where(x => x.Source.Rank != Rank.Rookie));
-            DataLoaded = true;
-        }
-
-        private bool _dataLoaded;
         public bool DataLoaded
         {
             get { return _dataLoaded; }
@@ -102,7 +61,6 @@ namespace DW2DBViewer.Tabs
             }
         }
 
-        private decimal _percent;
         public decimal Percent
         {
             get { return _percent; }
@@ -111,27 +69,6 @@ namespace DW2DBViewer.Tabs
                 _percent = value;
                 OnPropertyChanged(nameof(Percent));
             }
-        }
-
-        private void PercentChanged(decimal percent)
-        {
-            Percent = percent;
-        }
-
-
-        private void ClearResult()
-        {
-            Result = null;
-        }
-
-        private void ClearParent2()
-        {
-            Parent2 = null;
-        }
-
-        private void ClearParent1()
-        {
-            Parent1 = null;
         }
 
         public DigivolveDNAOptionVM SelectedOption
@@ -179,7 +116,7 @@ namespace DW2DBViewer.Tabs
 
         public int MaxLevel
         {
-            get { return Parent1Level + Parent2Level / 5; }
+            get { return Parent1Level + Parent2Level/5; }
         }
 
 
@@ -210,35 +147,6 @@ namespace DW2DBViewer.Tabs
             }
         }
 
-        private void SetResult()
-        {
-            if (Parent1 != null && Parent2 != null)
-            {
-                var dna = DBStatic.GetChild(Parent1.Source.NameEng, Parent2.Source.NameEng);
-                if (dna != null)
-                {
-                    _result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == dna.DigimonChildId);
-                }
-            }
-
-
-
-            //            if (Parent1 != null && Parent2 != null && AllOptions.Any())
-            //            {
-            //                var temp = AllOptions.FirstOrDefault(x => (Parent1 != Parent2 && x.Parents.Contains(Parent1) && x.Parents.Contains(Parent2))
-            //                || (Parent1 == Parent2 &&  x.Parents.All(y => y == Parent1)));
-            //                if (temp != null)
-            //                    _result = temp.Result;
-            //                else
-            //                    _result = null;
-            //            }
-            //            else
-            //            {
-            //                _result = null;
-            //            }
-        }
-
-
 
         public List<int> Parent2Levels
         {
@@ -260,7 +168,6 @@ namespace DW2DBViewer.Tabs
                 OnPropertyChanged(nameof(MaxLevel));
             }
         }
-
 
 
         public DigimonVM Parent2
@@ -334,11 +241,113 @@ namespace DW2DBViewer.Tabs
 
         public ObservableCollection<DigivolveDNAOptionVM> FilteredOptions
         {
-            get { return new ObservableCollection<DigivolveDNAOptionVM>(AllOptions.Where(x => (Parent1 == null && Parent2 == null && Result == null) || (Parent1 != Parent2 && (Parent1 == null || x.Parents.Contains(Parent1)) && (Parent2 == null || x.Parents.Contains(Parent2)) && (Result == null || x.Result == Result)) || (Parent1 == Parent2 && x.Parents.All(y => y == Parent1)))); }
+            get
+            {
+                return
+                    new ObservableCollection<DigivolveDNAOptionVM>(
+                        AllOptions.Where(
+                            x =>
+                                (Parent1 == null && Parent2 == null && Result == null) ||
+                                (Parent1 != Parent2 && (Parent1 == null || x.Parents.Contains(Parent1)) &&
+                                 (Parent2 == null || x.Parents.Contains(Parent2)) &&
+                                 (Result == null || x.Result == Result)) ||
+                                (Parent1 == Parent2 && x.Parents.All(y => y == Parent1))));
+            }
         }
 
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public List<int> Levels(Rank rank)
+        {
+            var min = 0;
+            switch (rank)
+            {
+                case Rank.Champion:
+                    min = 11;
+                    break;
+                case Rank.Ultimate:
+                    min = 21;
+                    break;
+                case Rank.Mega:
+                    min = 31;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(rank), rank, null);
+            }
+
+            var result = new List<int>();
+            for (var i = min; i < 100; i++)
+            {
+                result.Add(i);
+            }
+            return result;
+        }
+
+        private void DoDigimonDetails(DigimonVM obj)
+        {
+            DigimonClicked?.Invoke(obj);
+        }
+
+        private void LoadCompleted(List<DigimonVM> digimons, List<DigivolveDNAOptionVM> dnas)
+        {
+            //AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(dnas);
+            AllOptions = new ObservableCollection<DigivolveDNAOptionVM>();
+
+            AllDigimons = new ObservableCollection<DigimonVM>(digimons);
+
+            //отсеиваем новичков
+            Digimons = new ObservableCollection<DigimonVM>(digimons.Where(x => x.Source.Rank != Rank.Rookie));
+            DataLoaded = true;
+        }
+
+        private void PercentChanged(decimal percent)
+        {
+            Percent = percent;
+        }
+
+
+        private void ClearResult()
+        {
+            Result = null;
+        }
+
+        private void ClearParent2()
+        {
+            Parent2 = null;
+        }
+
+        private void ClearParent1()
+        {
+            Parent1 = null;
+        }
+
+        private void SetResult()
+        {
+            if (Parent1 != null && Parent2 != null)
+            {
+                var dna = DNATables.GetChild(Parent1.Source.NameEng, Parent2.Source.NameEng);
+                if (dna != null)
+                {
+                    _result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == dna.DigimonChildId);
+                }
+            }
+
+
+            //            if (Parent1 != null && Parent2 != null && AllOptions.Any())
+            //            {
+            //                var temp = AllOptions.FirstOrDefault(x => (Parent1 != Parent2 && x.Parents.Contains(Parent1) && x.Parents.Contains(Parent2))
+            //                || (Parent1 == Parent2 &&  x.Parents.All(y => y == Parent1)));
+            //                if (temp != null)
+            //                    _result = temp.Result;
+            //                else
+            //                    _result = null;
+            //            }
+            //            else
+            //            {
+            //                _result = null;
+            //            }
+        }
 
         protected virtual void OnPropertyChanged(string propertyName)
         {

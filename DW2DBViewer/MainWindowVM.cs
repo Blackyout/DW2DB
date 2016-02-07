@@ -1,14 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
-using DataBase;
 using DW2DBViewer.Tabs;
 using Gat.Controls;
 
@@ -25,9 +18,16 @@ namespace DW2DBViewer
             DBLoader.LoadStatic();
         }
 
+        public AllDigimonsVM AllDigimonsVM { get; set; }
+        public DigivolveDNAVM DigivolveDNAVM { get; set; }
+
+        public ICommand ShowAboutCmd { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private void DoShowAbout()
         {
-            BitmapImage logo = new BitmapImage();
+            var logo = new BitmapImage();
             logo.BeginInit();
             logo.UriSource = new Uri("pack://application:,,,/DW2DBViewer;component/Resources/icon.png");
             logo.EndInit();
@@ -35,7 +35,7 @@ namespace DW2DBViewer
 
             var about = new About();
 
-            about.ApplicationLogo = logo; 
+            about.ApplicationLogo = logo;
             switch (App.Language.Name)
             {
                 case "ru-RU":
@@ -59,16 +59,9 @@ namespace DW2DBViewer
                         "Programming: Misurin Artem, drdoomenator@gmail.com, for digimonworld.ru";
                     break;
             }
-            
+
             about.Show();
         }
-
-        public AllDigimonsVM AllDigimonsVM { get; set; }
-        public DigivolveDNAVM DigivolveDNAVM { get; set; }
-
-        public ICommand ShowAboutCmd { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
 
         protected virtual void OnPropertyChanged(string propertyName = null)

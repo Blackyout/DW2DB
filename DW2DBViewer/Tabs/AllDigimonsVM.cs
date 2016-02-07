@@ -1,40 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using DataBase;
 using DW2DBViewer.ViewModels;
 
 namespace DW2DBViewer
 {
     public class AllDigimonsVM : INotifyPropertyChanged
     {
-        public ICommand NavigateToCmd { get; set; }
-
-        public DigimonVM SelectedItem
-        {
-            get { return _selectedItem; }
-            set
-            {
-                _selectedItem = value; 
-                OnPropertyChanged(nameof(SelectedItem));
-            }
-        }
-
         private ObservableCollection<DigimonVM> _allDigimons;
-        private string _nameFilter;
-
-        private DigimonVM _selectedItem;
-        private decimal _percent;
         private bool _dataLoaded;
         private bool _isSelected;
+        private string _nameFilter;
+        private decimal _percent;
+
+        private DigimonVM _selectedItem;
 
         public AllDigimonsVM()
         {
@@ -43,6 +24,18 @@ namespace DW2DBViewer
             NavigateToCmd = new DelegateCommand<DigimonVM>(DoNavigateTo);
 
             AllDigimons = new ObservableCollection<DigimonVM>();
+        }
+
+        public ICommand NavigateToCmd { get; set; }
+
+        public DigimonVM SelectedItem
+        {
+            get { return _selectedItem; }
+            set
+            {
+                _selectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
+            }
         }
 
 
@@ -54,13 +47,6 @@ namespace DW2DBViewer
                 _isSelected = value;
                 OnPropertyChanged(nameof(IsSelected));
             }
-        }
-
-
-        private void LoadCompleted(List<DigimonVM> digimonVms)
-        {
-            AllDigimons = new ObservableCollection<DigimonVM>(digimonVms);
-            DataLoaded = true;
         }
 
         public bool DataLoaded
@@ -84,17 +70,6 @@ namespace DW2DBViewer
             }
         }
 
-        private void PercentChanged(decimal percent)
-        {
-            Percent = percent;
-        }
-
-        private void DoNavigateTo(DigimonVM obj)
-        {
-            NameFilter = string.Empty;
-            SelectedItem = obj;
-        }
-
         public ObservableCollection<DigimonVM> AllDigimons
         {
             get { return _allDigimons; }
@@ -108,11 +83,14 @@ namespace DW2DBViewer
 
         public ObservableCollection<DigimonVM> FilteredDigimons
         {
-            get { return new ObservableCollection<DigimonVM>(
-                AllDigimons.Where(x => string.IsNullOrWhiteSpace(NameFilter) 
-                || x.Source.NameEng.ToLower().Contains(NameFilter.ToLower())
-                || x.Source.NameRus.ToLower().Contains(NameFilter.ToLower()))
-                ); }
+            get
+            {
+                return new ObservableCollection<DigimonVM>(
+                    AllDigimons.Where(x => string.IsNullOrWhiteSpace(NameFilter)
+                                           || x.Source.NameEng.ToLower().Contains(NameFilter.ToLower())
+                                           || x.Source.NameRus.ToLower().Contains(NameFilter.ToLower()))
+                    );
+            }
         }
 
         public string NameFilter
@@ -130,7 +108,25 @@ namespace DW2DBViewer
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected virtual void OnPropertyChanged( string propertyName = null)
+
+        private void LoadCompleted(List<DigimonVM> digimonVms)
+        {
+            AllDigimons = new ObservableCollection<DigimonVM>(digimonVms);
+            DataLoaded = true;
+        }
+
+        private void PercentChanged(decimal percent)
+        {
+            Percent = percent;
+        }
+
+        private void DoNavigateTo(DigimonVM obj)
+        {
+            NameFilter = string.Empty;
+            SelectedItem = obj;
+        }
+
+        protected virtual void OnPropertyChanged(string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

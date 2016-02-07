@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using DataBase;
+﻿using DataBase;
 
 namespace DW2DBViewer.ViewModels
 {

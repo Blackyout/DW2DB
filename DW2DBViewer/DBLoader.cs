@@ -1,12 +1,7 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using DataBase;
 using DW2DBViewer.ViewModels;
 
@@ -15,6 +10,12 @@ namespace DW2DBViewer
     public static class DBLoader
     {
         private static decimal _percentLoadDigimons;
+
+        public static Action<decimal> PercentDigimonChanged;
+        public static Action<decimal> PercentDNAChanged;
+        public static Action<List<DigimonVM>> DigimonLoadCompleted;
+        public static Action<List<DigimonVM>, List<DigivolveDNAOptionVM>> DNALoadCompleted;
+        private static decimal _percentLoadDna;
         public static List<DigimonVM> AllDigimons { get; set; }
 
         public static List<DigivolveDNAOptionVM> AllOptions { get; set; }
@@ -26,20 +27,12 @@ namespace DW2DBViewer
 
         public static void LoadStatic()
         {
-
-            DBStatic.FillStaticBase();
-            AllDigimons = DBStatic.Digimons.GetVMs();
+            AllDigimons = DBStatic.GetAllDigimons().GetVMs();
             DigimonLoadCompleted?.Invoke(AllDigimons);
             DNALoadCompleted?.Invoke(AllDigimons, AllOptions);
         }
-        
-        public static Action<decimal> PercentDigimonChanged;
-        public static Action<decimal> PercentDNAChanged;
-        public static Action<List<DigimonVM>> DigimonLoadCompleted;
-        public static Action<List<DigimonVM>, List<DigivolveDNAOptionVM>> DNALoadCompleted;
-        private static decimal _percentLoadDna;
 
-     
+
         public static List<DigimonVM> GetVMs(this IEnumerable<Digimon> digimons)
         {
             var result = new List<DigimonVM>();
@@ -49,31 +42,30 @@ namespace DW2DBViewer
             foreach (var digimon in digimons)
             {
                 result.Add(digimon.GetVM());
-
             }
 
             foreach (var digimonVm in result)
             {
                 digimonVm.DigivolveFrom =
-                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.OrderBy(x => x.DP).Select(
-                        x => new DigivolveDigimonVM()
-                        {
-                            Digimon = result.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),
-                            DP = x.DP
-                        }));
+                    new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesFrom.OrderBy(x => x.DP)
+                        .Select(
+                            x => new DigivolveDigimonVM
+                            {
+                                Digimon = result.FirstOrDefault(y => y.Source.NameEng == x.DigimonFromId),
+                                DP = x.DP
+                            }));
                 digimonVm.DigivolveTo =
                     new ObservableCollection<DigivolveDigimonVM>(digimonVm.Source.DigivolesTo.OrderBy(x => x.DP).Select(
-                        x => new DigivolveDigimonVM()
+                        x => new DigivolveDigimonVM
                         {
                             Digimon = result.FirstOrDefault(y => y.Source.NameEng == x.DigimonToId),
                             DP = x.DP
                         }));
                 index++;
-                PercentDigimonChanged?.Invoke(((decimal)index / count));
+                PercentDigimonChanged?.Invoke((decimal) index/count);
             }
 
             return result.OrderBy(x => x.Name).ToList();
-
         }
 
 
@@ -139,12 +131,12 @@ namespace DW2DBViewer
                 {
                     case "ru-RU":
                         locations.Add(location.Domain != null
-                            ? location.Domain.NameRus + " Эт.:" + String.Join(",", location.Floors)
+                            ? location.Domain.NameRus + " Эт.:" + string.Join(",", location.Floors)
                             : location.DescriptionRus);
                         break;
                     default:
                         locations.Add(location.Domain != null
-                            ? location.Domain.NameEng + " Lvl:" + String.Join(",", location.Floors)
+                            ? location.Domain.NameEng + " Lvl:" + string.Join(",", location.Floors)
                             : location.DescriptionEng);
                         break;
                 }
