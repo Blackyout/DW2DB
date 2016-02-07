@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 
 namespace DataBase
@@ -79,6 +77,13 @@ namespace DataBase
 
 
         public static List<DigivolveDNA> DigivolvesDNA = new List<DigivolveDNA>();
+
+
+        public static Rank GetRank(string digimonId)
+        {
+            var digimon = Digimons.FirstOrDefault(x => x.NameEng == digimonId);
+            return digimon.Rank;
+        }
 
 
         #region Skills
@@ -1675,7 +1680,6 @@ namespace DataBase
 
         public static Domain GetDomain(string domainId)
         {
-            //return new Domain();
             return Domains.FirstOrDefault(x => x.NameEng == domainId);
         }
 

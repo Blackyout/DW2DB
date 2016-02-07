@@ -83,12 +83,18 @@ namespace DW2DBViewer.Tabs
                     _parent1 = SelectedOption.Parents[0];
                     _parent2 = SelectedOption.Parents[1];
                     _result = SelectedOption.Result;
+                    Parent1Levels = Levels(Parent1.Source.Rank);
+                    Parent1Level = Parent1Levels.FirstOrDefault();
+                    Parent2Levels = Levels(Parent2.Source.Rank);
+                    Parent2Level = Parent2Levels.FirstOrDefault();
                 }
 
                 OnPropertyChanged(nameof(SelectedOption));
                 OnPropertyChanged(nameof(Parent1));
                 OnPropertyChanged(nameof(Parent2));
                 OnPropertyChanged(nameof(Result));
+                OnPropertyChanged(nameof(Parent1Levels));
+                OnPropertyChanged(nameof(Parent2Levels));
             }
         }
 
@@ -116,7 +122,7 @@ namespace DW2DBViewer.Tabs
 
         public int MaxLevel
         {
-            get { return Parent1Level + Parent2Level/5; }
+            get { return Parent1Level + Parent2Level / 5; }
         }
 
 
@@ -142,7 +148,7 @@ namespace DW2DBViewer.Tabs
 
                 OnPropertyChanged(nameof(Parent1));
                 OnPropertyChanged(nameof(Result));
-                OnPropertyChanged(nameof(FilteredOptions));
+                OnPropertyChanged(nameof(AllOptions));
                 OnPropertyChanged(nameof(Parent1Levels));
             }
         }
@@ -193,7 +199,7 @@ namespace DW2DBViewer.Tabs
 
                 OnPropertyChanged(nameof(Parent2));
                 OnPropertyChanged(nameof(Result));
-                OnPropertyChanged(nameof(FilteredOptions));
+                OnPropertyChanged(nameof(AllOptions));
             }
         }
 
@@ -203,17 +209,18 @@ namespace DW2DBViewer.Tabs
             set
             {
                 _result = value;
-                if (_result == null)
-                {
-                    _parent1 = null;
-                    _parent2 = null;
-                }
+                _parent1 = null;
+                _parent2 = null;
+
+                if (_result != null)
+                    AllOptions = new ObservableCollection<DigivolveDNAOptionVM>(DBLoader.DigivolveDna(_result.Source.NameEng));
+
 
                 SelectedOption = null;
                 OnPropertyChanged(nameof(Result));
                 OnPropertyChanged(nameof(Parent1));
                 OnPropertyChanged(nameof(Parent2));
-                OnPropertyChanged(nameof(FilteredOptions));
+                OnPropertyChanged(nameof(AllOptions));
             }
         }
 

@@ -69,6 +69,24 @@ namespace DW2DBViewer
         }
 
 
+
+        public static List<DigivolveDNAOptionVM> DigivolveDna(string child)
+        {
+            return DNATables.GetAllOptions(child).Select(x => x.GetVM()).ToList();
+        }
+
+        public static DigivolveDNAOptionVM GetVM(this DigivolveDNA digivolveDna)
+        {
+            var result = new DigivolveDNAOptionVM();
+            result.Source = digivolveDna;
+            result.Parents = new List<DigimonVM>();
+            result.Result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonChildId);
+            result.Parents.Add(AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonParent1Id));
+            result.Parents.Add(AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonParent2Id));
+            return result;
+        }
+
+
         public static DigimonVM GetVM(this Digimon digimon)
         {
             var vm = new DigimonVM();

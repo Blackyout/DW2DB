@@ -126,7 +126,7 @@
                       IsReadOnly="True"
                       CanUserAddRows="False" CanUserDeleteRows="False"
                       CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
-                      ItemsSource="{Binding Path=FilteredOptions}" Height="266" VerticalAlignment="Top">
+                      ItemsSource="{Binding Path=AllOptions}" VerticalAlignment="Top">
                 <DataGrid.Columns>
 
                     <DataGridTextColumn Header="{DynamicResource Parent1}" Width="2*"

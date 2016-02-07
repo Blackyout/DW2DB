@@ -24,8 +24,12 @@ namespace DAO.Test
             Console.WriteLine(watch1.Elapsed);
         }
 
-        
 
+        [Fact]
+        public void AllOptionsTest()
+        {
+           var dnas = DNATables.GetAllOptions("Veemon");
+        }
 
         [Fact]
         public void Main()
