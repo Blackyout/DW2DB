@@ -62,7 +62,7 @@ namespace DW2DBViewer
                             DP = x.DP
                         }));
                 index++;
-                PercentDigimonChanged?.Invoke((decimal) index/count);
+                PercentDigimonChanged?.Invoke((decimal)index / count);
             }
 
             return result.OrderBy(x => x.Name).ToList();
@@ -83,6 +83,15 @@ namespace DW2DBViewer
             result.Result = AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonChildId);
             result.Parents.Add(AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonParent1Id));
             result.Parents.Add(AllDigimons.FirstOrDefault(x => x.Source.NameEng == digivolveDna.DigimonParent2Id));
+            switch (App.Language.Name)
+            {
+                case "ru-RU":
+                    result.Mutation = digivolveDna.Mutation ? "Да" : "Нет";
+                    break;
+                default:
+                    result.Mutation = digivolveDna.Mutation ? "Yes" : "No";
+                    break;
+            }
             return result;
         }
 

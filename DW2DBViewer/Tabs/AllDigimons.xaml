@@ -55,11 +55,6 @@
                             <SolidColorBrush Color="#00eecc" />
                         </Setter.Value>
                     </Setter>
-                    <!--                    <Setter Property="Foreground">-->
-                    <!--                        <Setter.Value>-->
-                    <!--                            <SolidColorBrush Color="White"/>-->
-                    <!--                        </Setter.Value>-->
-                    <!--                    </Setter>-->
                 </DataTrigger>
                 <DataTrigger Binding="{Binding Source.Type}" Value="Vaccine">
                     <Setter Property="Background">
@@ -71,11 +66,6 @@
             </Style.Triggers>
         </Style>
 
-        <!--        природа -1dd416-->
-        <!--вода - 16d4bc-->
-        <!--машина- eef000-->
-        <!--тьма- 6f4233-->
-        <!--огонь- ff4000-->
         <Style x:Key="SpecialityStyle" TargetType="{x:Type TextBlock}">
             <Style.Triggers>
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Nature">
@@ -102,7 +92,12 @@
                 <DataTrigger Binding="{Binding Source.Speciality}" Value="Darkness">
                     <Setter Property="Background">
                         <Setter.Value>
-                            <SolidColorBrush Color="#6f4233" />
+                            <SolidColorBrush Color="Black" />
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground">
+                        <Setter.Value>
+                            <SolidColorBrush Color="White" />
                         </Setter.Value>
                     </Setter>
                 </DataTrigger>
@@ -117,7 +112,72 @@
         </Style>
 
 
+        <Style x:Key="SkillSource" TargetType="{x:Type TextBlock}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Native">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="LightGreen" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild1">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild2">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild3">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild4">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild5">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Source.SkillSource}" Value="Wild6">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="Pink" />
+                        </Setter.Value>
+                    </Setter>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+
+
     </UserControl.Resources>
+    
+    
     <Grid IsEnabled="{Binding DataLoaded}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -136,7 +196,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBlock Margin="3" VerticalAlignment="Center" Text="{DynamicResource Digimon}" />
+            <TextBlock Margin="3" VerticalAlignment="Center" Text="{DynamicResource Search}" />
             <TextBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Margin="3"
                      Text="{Binding NameFilter,UpdateSourceTrigger=PropertyChanged}" />
         </Grid>
@@ -166,21 +226,26 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="3" AutoGenerateColumns="false"
+        <DataGrid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Margin="3"
                   IsReadOnly="True"
+                  AutoGenerateColumns="false"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
+                  HorizontalScrollBarVisibility="Visible"
                   ItemsSource="{Binding Path=SelectedItem.Skills}"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{DynamicResource Type}" HeaderStyle="{StaticResource HeaderStyle}"
-                                    Width="70" Binding="{Binding Path=Type, Mode=TwoWay}" />
+                                    ElementStyle="{StaticResource SkillSource}"
+                                    Width="60" Binding="{Binding Path=Type, Mode=TwoWay}" />
                 <DataGridTextColumn Header="{DynamicResource Skill}" Width="150"
+                                    ElementStyle="{StaticResource SkillSource}"
                                     Binding="{Binding Path=Name, Mode=TwoWay}" />
-                <DataGridTextColumn Header="MP" Width="40" Binding="{Binding Path=Source.MP, Mode=TwoWay}" />
-                <DataGridTextColumn Header="{DynamicResource AP}" Width="80"
+                <DataGridTextColumn Header="MP" Width="40" Binding="{Binding Path=Source.MP, Mode=TwoWay}" 
+                                    ElementStyle="{StaticResource SkillSource}"/>
+                <DataGridTextColumn Header="{DynamicResource AP}" Width="80" ElementStyle="{StaticResource SkillSource}"
                                     Binding="{Binding Path=Source.AP, Mode=TwoWay}" />
-                <DataGridTextColumn Header="{DynamicResource Description}" Width="4*"
+                <DataGridTextColumn Header="{DynamicResource Description}" Width="*" ElementStyle="{StaticResource SkillSource}"
                                     Binding="{Binding Path=Description, Mode=TwoWay}" />
             </DataGrid.Columns>
         </DataGrid>
@@ -223,7 +288,7 @@
                 <!--                <Image Margin="3" Source="pack://application:,,,/PicDB;component/Pics/Agumon.jpg"/>-->
             </Border>
             <GroupBox Padding="10" Margin="3" Header="{DynamicResource Location}" Grid.Row="1">
-                <TextBlock Text="{Binding SelectedItem.LocationStr}" TextWrapping="WrapWithOverflow" />
+                    <TextBlock Text="{Binding SelectedItem.LocationStr}" TextWrapping="WrapWithOverflow" />
             </GroupBox>
         </Grid>
 

@@ -29,4 +29,6 @@
     <v:String x:Key="AP">Attack power</v:String>
     <v:String x:Key="Level">Level:</v:String>
     <v:String x:Key="MaxLevel">Max level:</v:String>
+    <v:String x:Key="Search">Search:</v:String>
+    <v:String x:Key="Mutation">Mutation</v:String>
 </ResourceDictionary>

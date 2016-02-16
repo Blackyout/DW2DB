@@ -33,9 +33,14 @@ namespace DW2DBViewer
             logo.EndInit();
 
 
+            var version =  (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+                           ? System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion.ToString()
+                           : "!версии нет!";
+
             var about = new About();
 
             about.ApplicationLogo = logo;
+            about.Version = version;
             switch (App.Language.Name)
             {
                 case "ru-RU":
@@ -44,7 +49,6 @@ namespace DW2DBViewer
                     about.Hyperlink = new Uri("https://github.com/drdoomenator/DW2DB");
                     about.HyperlinkText = "https://github.com/drdoomenator/DW2DB";
                     about.PublisherLogo = null;
-                    about.Version = "1.0.0";
                     about.AdditionalNotes =
                         "Программирование: Мисюрин Артём, drdoomenator@gmail.com, специально для digimonworld.ru";
                     break;
@@ -54,7 +58,6 @@ namespace DW2DBViewer
                     about.Hyperlink = new Uri("https://github.com/drdoomenator/DW2DB");
                     about.HyperlinkText = "https://github.com/drdoomenator/DW2DB";
                     about.PublisherLogo = null;
-                    about.Version = "1.0.0";
                     about.AdditionalNotes =
                         "Programming: Misurin Artem, drdoomenator@gmail.com, for digimonworld.ru";
                     break;

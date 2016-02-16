@@ -17,7 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="375" />
+            <RowDefinition Height="400" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
 
@@ -159,6 +159,16 @@
                         </DataGridTextColumn.HeaderStyle>
                     </DataGridTextColumn>
 
+
+                    <DataGridTextColumn Header="{DynamicResource Mutation}" Width="2*"
+                                        Binding="{Binding Path=Mutation}">
+                        <DataGridTextColumn.HeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment"
+                                        Value="Center" />
+                            </Style>
+                        </DataGridTextColumn.HeaderStyle>
+                    </DataGridTextColumn>
 
                 </DataGrid.Columns>
             </DataGrid>

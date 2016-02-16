@@ -7,8 +7,8 @@
         xmlns:tabs="clr-namespace:DW2DBViewer.Tabs"
         mc:Ignorable="d"
         Icon="Resources/icon.png"
-        Title="{DynamicResource Title}" MinHeight="700" MinWidth="1000" MaxHeight="700" MaxWidth="1000"
-        Height="700" Width="1000"
+        Title="{DynamicResource Title}"  MinHeight="700" MinWidth="1070"
+        Height="700" Width="1070"
         d:DataContext="{d:DesignInstance local:MainWindowVM }">
     <DockPanel>
         <DockPanel.DataContext>

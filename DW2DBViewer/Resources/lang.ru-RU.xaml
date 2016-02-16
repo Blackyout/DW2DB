@@ -16,7 +16,7 @@
     <v:String x:Key="Digimon">Дигимон</v:String>
     <v:String x:Key="Rank">Форма</v:String>
     <v:String x:Key="Type">Тип</v:String>
-    <v:String x:Key="Speciality">Спец-ция</v:String>
+    <v:String x:Key="Speciality">Элемент</v:String>
     <v:String x:Key="Skill">Умение</v:String>
     <v:String x:Key="Description">Описание</v:String>
     <v:String x:Key="Domain">Домен</v:String>
@@ -29,5 +29,6 @@
     <v:String x:Key="AP">Сила атаки</v:String>
     <v:String x:Key="Level">Уровень:</v:String>
     <v:String x:Key="MaxLevel">Макс. уровень:</v:String>
-
+    <v:String x:Key="Search">Поиск:</v:String>
+    <v:String x:Key="Mutation">Мутация</v:String>
 </ResourceDictionary>

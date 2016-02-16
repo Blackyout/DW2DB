@@ -10,5 +10,7 @@ namespace DW2DBViewer.ViewModels
         public List<DigimonVM> Parents { get; set; }
 
         public DigimonVM Result { get; set; }
+
+        public string Mutation { get; set; }
     }
 }

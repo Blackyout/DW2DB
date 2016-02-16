@@ -78,7 +78,7 @@ namespace DataBase
 
             if (temp.Key == null)
             {
-                MessageBox.Show($"Не найдено соотвествие в таблице для {childName} код {digimonTableCode}");
+                // MessageBox.Show($"Не найдено соотвествие в таблице для {childName} код {digimonTableCode}");
                 return result;
             }
 
@@ -105,7 +105,7 @@ namespace DataBase
                 }
             }
 
-            result.AddRange(GetMutation().Where(x=>x.DigimonChildId == childName));
+            result.AddRange(GetMutation().Where(x => x.DigimonChildId == childName));
 
 
 
@@ -279,7 +279,7 @@ namespace DataBase
 
             foreach (var mutationEng in MutationEng)
             {
-                tempDna.Add(new DigivolveDNA(mutationEng.Key.Key, mutationEng.Key.Value, mutationEng.Value));
+                tempDna.Add(new DigivolveDNA(mutationEng.Key.Key, mutationEng.Key.Value, mutationEng.Value, true));
             }
 
             return tempDna;

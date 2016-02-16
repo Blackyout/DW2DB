@@ -62,7 +62,7 @@ namespace DataBase
 
         public static Dictionary<SkillType, string> SkillTypeRus = new Dictionary<SkillType, string>()
         {
-            {SkillType.Attack,"Аттака"},
+            {SkillType.Attack,"Атака"},
             {SkillType.CounterAttack,"Контратака"},
             {SkillType.Interrupt,"Прерывание"},
             {SkillType.Assist,"Помощь"},
