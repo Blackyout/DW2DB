@@ -183,7 +183,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="110" />
-            <RowDefinition Height="90" />
+            <RowDefinition Height="110" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -231,7 +231,7 @@
                   AutoGenerateColumns="false"
                   CanUserAddRows="False" CanUserDeleteRows="False"
                   CanUserReorderColumns="False" CanUserResizeColumns="False" CanUserResizeRows="False"
-                  HorizontalScrollBarVisibility="Visible"
+                  VerticalScrollBarVisibility="Disabled" HorizontalScrollBarVisibility="Disabled"
                   ItemsSource="{Binding Path=SelectedItem.Skills}"
                   ColumnHeaderStyle="{StaticResource HeaderStyle}">
             <DataGrid.Columns>
